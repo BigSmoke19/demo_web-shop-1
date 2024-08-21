@@ -1,0 +1,52 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  border: 5px black solid;
+}
+#name{
+  display: flex;
+  justify-content: center;
+}
+.items{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+
+}
+.items-preview{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 1px blue solid;
+  width: 110px;
+}
+.items-preview:hover{
+  background-color: aqua;
+}
+#delete-btn:hover{
+  background-color: red;
+}
+.NavBar{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  vertical-align: middle;
+}
+.links{
+  text-decoration: none;
+  color: black;
+}
+#link{
+  font-size: 20px;
+}
+#link:hover{
+  color: blue;
+}
+form{
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
