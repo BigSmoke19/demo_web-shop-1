@@ -1,6 +1,11 @@
+import { Link } from "react-router-dom";
+
 const Categories = () => {
     return (  
-        <h2>Categories</h2>
+        <nav>
+            <Link className="link" to="/">Home</Link>
+            <Link className="link" to="Create">Create</Link>
+        </nav>
     );
 }
  
