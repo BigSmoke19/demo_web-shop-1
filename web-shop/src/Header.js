@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import React from "react";
+import './styles/home/header.css'
+import './styles/home/sidebar.css'
 
 const Header = () => {
 
@@ -26,7 +28,7 @@ const Header = () => {
             <div className="bottom-header">
                 <div className="left-section">
                     <button className="button-icon" onClick={handleCategoryClick}>
-                        <img src="../images/icons/category-icon.png" className="icon"/>
+                        <img src="../images/icons/option-icon.png" className="option-icon"/>
                     </button>
                     <p className="title">Web-Shop</p>
                 </div>
@@ -40,13 +42,10 @@ const Header = () => {
 
                 <div className="right-section">
                     <button className="button-icon">
-                        <img src="../images/icons/cart-icon.webp" className="icon" />
+                        <img className="cart-icon" src="../images/icons/cart-icon.jpg"/>
                     </button>
                     <button className="button-icon">
-                        <img src="../images/icons/wishlist-icon.svg" className="icon" />
-                    </button>
-                    <button className="button-icon">
-                        <img src="../images/icons/rotate-icon.png" className="icon" />
+                        <img src="../images/icons/wishlist-icon.svg" className="love-icon" />
                     </button>
                 </div>
             </div>

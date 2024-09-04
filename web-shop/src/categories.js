@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import './styles/home/navbar.css'
 
 const Categories = () => {
     return (  
