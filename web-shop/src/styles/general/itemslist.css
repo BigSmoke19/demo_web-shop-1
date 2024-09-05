@@ -1,0 +1,21 @@
+.items{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+.item{
+    height:300px;
+    width: 250px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: center;
+
+}
+.item-image{
+    height: 100px;
+    width: 200px;
+    object-fit: cover;
+}
