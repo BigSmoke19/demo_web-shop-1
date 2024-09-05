@@ -3,18 +3,19 @@ import { useNavigate } from "react-router-dom";
 
 
 const Create = () => {
+    const [image,setImage] = useState("");
     const [name,setName] = useState("");
     const [type,setType] = useState("");
     const [price,setPrice] = useState(0);
     const [isPending,setIsPending] = useState(false);
     const history = useNavigate();
-    const url = "http://localhost:8000/items";
+    const url = "http://localhost/webshop-apis/adddata.php";
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const item = {name,type,price};
+        const item = {name,type,price,image};
         setIsPending(true);
-
+        console.log(JSON.stringify(item));
         fetch(url,{
             method:'POST',
             headers:{"content-type":"application/json"},
@@ -27,10 +28,24 @@ const Create = () => {
             }
         );
     }
+
+    const handleImage = (event) =>{
+        const file = event.target.files[0];
+        if(file){
+            const reader = new FileReader();
+            reader.onloadend = () =>{
+                setImage(reader.result);
+            }
+            reader.readAsDataURL(file);
+            //console.log(image);
+        }
+    }
     return (
         <div className="create">
             <h2>Add New Item</h2>
             <form onSubmit={handleSubmit}>
+            <label>uplaod image </label>
+            <input type="file" onChange={handleImage} accept="image/*"/>
                 <label>Name: </label>
                 <input type="text" required value={name} 
                     onChange={(e)=>{setName(e.target.value)}}/>

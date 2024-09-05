@@ -13,9 +13,14 @@ const ItemsList = (props) => {
     return ( 
     <div className="items">
         <h2>{title}</h2>
-        {items.map((item) => (
+        {Array.from(items).map((item) => (
+
           <div className="items-preview" key={item.id}>
             <Link className="links" to={`/items/${item.id}`}>
+            <img 
+              src = {`data:image/jpeg;base64,${item.image}`} 
+              alt="Decoded-pic">
+              </img>
               <h3>{item.name}</h3>
               <h3>{item.type}</h3>
               <h3>{item.price}$</h3>

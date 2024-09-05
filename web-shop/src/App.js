@@ -3,7 +3,7 @@ import {BrowserRouter as Router,Route,Routes} from 'react-router-dom';
 import Create from './create';
 import Home from './home';
 import ItemDetails from './itemdetails';
-import Categories from './Categories';
+import Categories from './categories';
 import Header from './Header'
 
 function App() {
