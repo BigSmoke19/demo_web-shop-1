@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import React from "react";
+import './styles/home/header.css'
+import './styles/home/sidebar.css'
 
 const Header = () => {
 
@@ -26,7 +28,7 @@ const Header = () => {
             <div className="bottom-header">
                 <div className="left-section">
                     <button className="button-icon" onClick={handleCategoryClick}>
-                        <img src="../images/icons/category-icon.png" alt="category-icon" className="icon"/>
+                        <img src="../images/icons/option-icon.png" className="option-icon"/>
                     </button>
                     <p className="title">Web-Shop</p>
                 </div>
@@ -34,19 +36,16 @@ const Header = () => {
                 <div className="middle-section">
                     <input className="search-bar" type="search" placeholder="Search" />
                     <button className="search-icon-button">
-                        <img src="../images/icons/search-icon.webp" alt="search-icon" className="search-icon" />
+                        <img src="../images/icons/search-icon.webp" className="search-icon" />
                     </button>
                 </div>
 
                 <div className="right-section">
                     <button className="button-icon">
-                        <img src="../images/icons/cart-icon.webp" alt="cart-icon" className="icon" />
+                        <img className="cart-icon" src="../images/icons/cart-icon.jpg"/>
                     </button>
                     <button className="button-icon">
-                        <img src="../images/icons/wishlist-icon.svg" alt="wishlist-icon" className="icon" />
-                    </button>
-                    <button className="button-icon">
-                        <img src="../images/icons/rotate-icon.png" alt="rotate-icon" className="icon" />
+                        <img src="../images/icons/wishlist-icon.svg" className="love-icon" />
                     </button>
                 </div>
             </div>
