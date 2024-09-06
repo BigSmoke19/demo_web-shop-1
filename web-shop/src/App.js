@@ -5,6 +5,7 @@ import Home from './home';
 import ItemDetails from './itemdetails';
 import Categories from './categories';
 import Header from './Header'
+import SignUp from './signup';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/create" element={<Create />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/items/:id" element={<ItemDetails />} />
           </Routes>
         </div>
