@@ -9,9 +9,11 @@ header {
 .left-section {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     width:200px;
     height: 60px;
-    padding-left: 150px;
+    padding-left: 100px;
+    padding-right: 20px;
     flex-shrink: 0;
 }
 
@@ -19,6 +21,21 @@ header {
     font-family: "Anton", sans-serif;
     color:white;
     font-size: 26px;
+    vertical-align: top;
+}
+
+.menu-icon-button {
+    background-color: transparent;
+    border: none;
+    display: none;
+    padding: 0;
+}
+
+.menu-icon {
+    display: none;
+    width:30px;
+    height: 30px;
+    object-fit: cover;
 }
 
 /*
@@ -80,22 +97,104 @@ header {
     align-items: center;
     justify-content: space-between;
     width:150px;
-    padding-right: 150px;
+    padding-right: 100px;
     height: 60px;
     flex-shrink: 0;
 }
 
-.right-section-buttons {
+.right-section-buttons,
+.white-right-section-buttons {
     background-color: transparent;
     border: none;
 }
 
+.white-right-section-buttons {
+    display: none;
+}
+
 .user-icon,
 .heart-icon,
-.cart-icon
+.cart-icon,
+.white-search-icon
  {
     width:25px;
     height:25px;
     object-fit: cover;
+}
+
+.white-search-icon {
+    display:none;
+}
+
+/*
+    Ending right section
+*/
+
+.side-bar {
+    display: none;
+}
+
+@media (max-width:750px) {
+    .middle-section {
+        display: none;
+    }
+
+    .menu-icon,
+    .menu-icon-button {
+        display:block;
+    }
+
+    .left-section {
+        padding-left: 20px;
+        width:150px;
+    }
+
+    .right-section {
+        padding-right: 20px;
+        width:200px;
+    }
+
+    .white-right-section-buttons {
+        display: block;
+    }
+
+    .white-search-icon {
+        display: block;
+    }
+
+    .side-bar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
+        width: 0;
+        left:0;
+        top:0;
+        bottom:0;
+        background-color: black;
+        padding-top: 50px;
+        overflow: hidden;
+        z-index: 2;
+        transition: width 0.5s ease;
+    }
+    .side-bar.open {
+        width: 50%;
+    }
+    .side-bar .link {
+        margin-bottom: 30px;
+    }
+    
+    .cancel-button {
+        position: absolute;
+        top:0;
+        right:-5px;
+        background-color: white;
+        padding: 5px 10px 5px 10px;
+        color:black;
+        font-weight: bold;
+        font-size: 18px;
+        border-radius: 10px;
+    }
+    
 }
   

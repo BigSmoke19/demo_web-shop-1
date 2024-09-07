@@ -2,12 +2,12 @@
 nav {
     align-items: center;
     position: fixed;
-    top:100px;
+    top:60px;
     left:0;
     right:0;
     display: flex;
     justify-content: center;
-    background-color: black;
+    background-color: rgb(42, 41, 41);
     height: 60px;
   }
   
@@ -53,5 +53,11 @@ nav {
     &::after {
       transition: width .2s cubic-bezier(0.29, 0.18, 0.26, 0.83);
       background: #F44336;
+    }
+  }
+
+  @media(max-width:750px) {
+    nav {
+      display:none;
     }
   }
