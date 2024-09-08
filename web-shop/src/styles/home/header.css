@@ -45,7 +45,7 @@ header {
 
 .middle-section {
     display: flex;
-    justify-content: left;
+    justify-content: center;
     align-items: center;
     height: 60px;
     flex: 1;
@@ -195,5 +195,11 @@ header {
         border-radius: 10px;
     }
     
+}
+#log-out{
+    background-color: black;
+    border: none;
+    color: red;
+    cursor: pointer;
 }
   

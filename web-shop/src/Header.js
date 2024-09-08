@@ -1,10 +1,14 @@
 import './styles/home/header.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useCookies } from 'react-cookie';
 
 const Header = () => {
     const [isMenu,setIsMenu]=React.useState(false);
-
+    const [cookies,setCookies,removeCookie] = useCookies(['email']);
+    const handleLogOut = () =>{
+        removeCookie('email',{path: '/'});
+    }
     return(
         <header>
             <div className="left-section" >
@@ -35,8 +39,8 @@ const Header = () => {
                 <button className="white-right-section-buttons">
                     <img src="/images/icons/white-search-icon.png" className="white-search-icon" />
                 </button>
-                <button className="right-section-buttons">
-                    <img src="/images/icons/user-icon.png" className="user-icon" />
+                <button onClick={handleLogOut} id="log-out">
+                    Log Out
                 </button>
                 <button className="right-section-buttons">
                     <img src="/images/icons/heart-icon.png" className="heart-icon" />

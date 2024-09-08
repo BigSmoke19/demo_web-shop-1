@@ -6,12 +6,9 @@ nav {
     left:0;
     right:0;
     align-items: center;
-    justify-content: center;
     background-color: rgb(42, 41, 41);
     height: 60px;
     padding-bottom: 10px;
-    padding-left: 200px;
-    padding-right: 150px;
   }
 
   .categories {
@@ -20,6 +17,9 @@ nav {
     align-items: center;
     height: 60px;
     flex: 1;
+    margin-left: 10px;
+    margin-right: 50px;
+    width: 0;
   }
 
   .link {
@@ -27,10 +27,25 @@ nav {
     font-size: 20px;
     color:whitesmoke;
     font-weight: bold;
-    padding: 20px;
+    padding-right: 20px;
   }
   
+  .left-navbar {
+    width:200px;
+    height: 60px;
+    padding-left: 100px;
+    padding-right: 20px;
+    padding-top: 5px;
+    flex-shrink: 0;
+  }
 
+  .right-navbar {
+    width:150px;
+    padding-right: 100px;
+    padding-top: 5px;
+    height: 60px;
+    flex-shrink: 0;
+  }
 
   @media(max-width:750px) {
     nav {

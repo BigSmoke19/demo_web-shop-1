@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 const SignUp = () => {
     const [name,setName] = useState(null);
@@ -8,6 +9,7 @@ const SignUp = () => {
     const [confirmPass,setConfirmPass] = useState(null);
     const [errorMessage,setErrorMessage] = useState(null);
     const [isPending,setIsPending] = useState(false);
+    const [cookies,setCookies,removeCookies] = useCookies(['email']);
     const history = useNavigate();
     const url = "http://localhost/webshop-apis/adduser.php";
 
@@ -36,6 +38,7 @@ const SignUp = () => {
                 body:JSON.stringify(user)
             }).then(
                 () =>{
+                    setCookies('email',email,{path: '/'});
                     alert("Signed Up!");
                     setIsPending(false);
                     history("/");
@@ -62,7 +65,7 @@ const SignUp = () => {
                 <p id="error">{errorMessage}</p>
                 <br /> <br />
 
-                {isPending && <p>Adding Item.....</p>}
+                {isPending && <p>Signing up.....</p>}
             </form>
         </div>
      );
