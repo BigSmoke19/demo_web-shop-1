@@ -45,9 +45,11 @@ const Header = () => {
                 <button className="right-section-buttons">
                     <img src="/images/icons/heart-icon.png" className="heart-icon" />
                 </button>
+                <Link to='Cart'>
                 <button className="right-section-buttons">
                     <img src="/images/icons/cart-icon.png" className="cart-icon" />
                 </button>
+                </Link>
             </div>
         </header>
     )

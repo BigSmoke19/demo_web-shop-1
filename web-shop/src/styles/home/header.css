@@ -106,6 +106,7 @@ header {
 .white-right-section-buttons {
     background-color: transparent;
     border: none;
+    cursor: pointer;
 }
 
 .white-right-section-buttons {
