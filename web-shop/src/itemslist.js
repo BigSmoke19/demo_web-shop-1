@@ -10,6 +10,7 @@ const ItemsList = (props) => {
     const [isKey,setIsKey]=React.useState(null);
     const [likes,setLikes]=React.useState([]);
     const [dislike,setDisLike]=React.useState(false)
+    const isHome = props.isHome;
 
     function handleMouseEnter(id) {
       setIsKey(id)
@@ -27,10 +28,20 @@ const ItemsList = (props) => {
           setLikes(likes.filter((like)=>like!==id))
           setDisLike(true);
         } else{
-          setLikes([
-            ...likes,
-            id
-          ]);
+            setLikes([
+              ...likes,
+              id
+            ]);
+          }
+    }
+    const handleCart = (item) =>{
+      if(localStorage.getItem('items') !== null){
+        const cart = JSON.parse(localStorage.getItem('items'));
+        cart.push(item);
+        localStorage.setItem('items',JSON.stringify(cart));
+      }
+      else{
+        localStorage.setItem('items',JSON.stringify([item]));
       }
     }
 
@@ -59,6 +70,7 @@ const ItemsList = (props) => {
                           <p className="price">
                               {item.price}$
                           </p>
+                          {isHome && <button className="add-to-cart" onClick={()=>handleCart(item)}>Add to cart</button>}
                     </div>
                 </div>
               ))}
