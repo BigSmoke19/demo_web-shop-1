@@ -3,43 +3,7 @@
   padding: 0;
 }
 
-.content {
-  display: flex;
-  flex-direction: column;
-  border: 5px black solid;
-  margin-top: 250px;
-}
-#name{
-  display: flex;
-  justify-content: center;
-}
-.items{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-
-}
-.items-preview{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border: 1px blue solid;
-  width: 110px;
-}
-.items-preview:hover{
-  background-color: aqua;
-}
-#delete-btn:hover{
-  background-color: red;
-}
-form{
-  margin-left: 10px;
-  margin-bottom: 10px;
-}
-#error{
-  color: red;
+.log-in {
+  padding-top: 100px;
 }
 

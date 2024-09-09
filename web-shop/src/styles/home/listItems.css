@@ -1,0 +1,60 @@
+.display-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,300px);
+    column-gap: 20px;
+    row-gap: 22px;
+    justify-content: center;
+    padding-top:60px;
+}
+
+.item-container {
+    width: 100%;
+}
+
+.thumbnail-container {
+    position: relative;
+}
+
+.thumbnail {
+    width:100%;
+    height: 450px;
+    object-fit: cover;
+}
+
+.like-icon {
+    width:20px;
+    height: 20px;
+    object-fit: cover;
+}
+
+.like-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    height: 40px;
+    width: 40px;
+    border:none;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    z-index: 1;
+}
+
+.type,
+.item-name {
+    font-size: 20px;
+    font-family: "Cormorant Garamond", serif;
+    color:rgb(17, 16, 16);
+    padding-left: 10px;
+    margin:0;
+}
+
+.price {
+    margin-top: 5px;    
+    padding-left: 10px;
+    font-size: 18px;
+    color: black;
+    font-family: Arial;
+}

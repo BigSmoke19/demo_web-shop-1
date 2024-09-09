@@ -10,8 +10,6 @@ const Categories = () => {
                 <Link className="link" to="/">Home</Link>
                 <Link className="link" to="Create">Create</Link>
                 <Link className="link" to="SignUp">SignUp</Link>
-                <Link className="link" to="/">Home</Link>
-                <Link className="link" to="Create">Create</Link>
                 {!cookies.email && <Link className="link" to="LogIn">Log In</Link>}
                 {cookies.email && <p className="link">{cookies.email}</p>}
             </div>

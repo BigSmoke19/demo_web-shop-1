@@ -6,6 +6,7 @@ create and manage login/signup page ✔                      **
 add security measures for data entries in signups           *
 add orders database                                         *
 manage ordering,wishlisting and adding product to cart      *
+manage serach bar action                                    *
 add security measures for admin logins                      *
 update admin page for deleting adding and editing items     *
 test website for vulnerbities                               *
