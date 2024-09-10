@@ -58,23 +58,30 @@ const LogIn = () => {
         }
     }
     return ( 
-        <div className="log-in">
-            <form onSubmit={handleSubmit}>
-                <label >Email: </label>
-                <input type="email" value={email} onChange={(e)=>{setEmail(e.target.value)}}/>
-                <br /> <br />
-                <label >Password: </label>
-                <input type="password" value={password} onChange={(e)=>{setPassword(e.target.value)}}/>
-                <br /> <br />
-                {!pending && <input type="submit" value="log in" />}
-                <p id="error">{errorMessage}</p>
-                <br /> <br />
-                <p>Don't have an account?</p>
-                <Link to="SignUp">SignUp</Link>
+        <div className="create">
+            <h2 className="title" style={{color:"black"}}>Log in</h2>
+            <div>
+                <form onSubmit={handleSubmit} className="center">
+                    <div className="name">
+                        <p className="name-type-label">Email: </p>
+                        <input className="name-type" type="email" value={email} onChange={(e)=>{setEmail(e.target.value)}}/>
+                    </div>
 
-                {myError && <div>{myError}</div>}     
-                {pending && <p>Logging in....</p>}
-            </form>
+                    <div className="type-create">
+                        <p className="name-type-label">Password: </p>
+                        <input className="name-type" type="password" value={password} onChange={(e)=>{setPassword(e.target.value)}}/>
+                    </div>
+                    {!pending && <input className="submit-button" type="submit" value="log in" />}
+                    <p id="error">{errorMessage}</p>
+                    <br /> <br />
+                    <p>Don't have an account?</p>
+                    <Link to="SignUp">SignUp</Link>
+
+                    {myError && <div>{myError}</div>}     
+                    {pending && <p>Logging in....</p>}
+                </form>
+            </div>
+            
         </div>
      );
 }

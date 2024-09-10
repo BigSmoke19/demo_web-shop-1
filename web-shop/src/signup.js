@@ -47,25 +47,33 @@ const SignUp = () => {
         }
     }
     return ( 
-        <div className="sign-up">
-            <form onSubmit={handleSubmit}>
-                <label >Name:</label>
-                <input type="text" onChange={(e)=>{setName(e.target.value)}}/>
-                <br /> <br />
-                <label >Email: </label>
-                <input type="email" onChange={(e)=>{setEmail(e.target.value)}}/>
-                <br /> <br />
-                <label >Password: </label>
-                <input type="password" onChange={(e)=>{setPassword(e.target.value)}}/>
-                <br /> <br />
-                <label >Confirm Password:</label>
-                <input type="password" onChange={(e)=>{setConfirmPass(e.target.value)}}/>
-                <br /> <br />
-                {!isPending && <input type="submit" value="Sign Up" />}
-                <p id="error">{errorMessage}</p>
-                <br /> <br />
+        <div className="create">
+            <h2 className="title" style={{color:"black"}}>Sign Up</h2>
+            <form onSubmit={handleSubmit} className="center">
+                <div className="name">
+                    <p className="name-type-label">Name:</p>
+                    <input className="name-type" type="text" onChange={(e)=>{setName(e.target.value)}}/>
+                </div>
 
-                {isPending && <p>Signing up.....</p>}
+                <div className="type-create">
+                    <p className="name-type-label">Email: </p>
+                    <input className="name-type" type="email" onChange={(e)=>{setEmail(e.target.value)}}/>
+                </div>
+
+                <div className="type-create">
+                    <p className="name-type-label">Password: </p>
+                    <input className="name-type" type="password" onChange={(e)=>{setPassword(e.target.value)}}/>
+                </div>
+
+                <div className="type-create">
+                    <p className="name-type-label">Confirm Password:</p>
+                    <input className="name-type" type="password" onChange={(e)=>{setConfirmPass(e.target.value)}}/>
+                </div>
+                
+                <div>
+                    <input className="submit-button" type="submit" value={!isPending?"Sign Up":"Signing up ..."} />
+                </div>
+                <p id="error">{errorMessage}</p>
             </form>
         </div>
      );

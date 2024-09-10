@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import './styles/admin/create.css';
 
 const Create = () => {
     const [image,setImage] = useState("");
@@ -42,30 +42,36 @@ const Create = () => {
     }
     return (
         <div className="create">
-            <h2>Add New Item</h2>
-            <form onSubmit={handleSubmit}>
-            <label>uplaod image </label>
-            <input type="file" onChange={handleImage} accept="image/*"/>
-                <label>Name: </label>
-                <input type="text" required value={name} 
-                    onChange={(e)=>{setName(e.target.value)}}/>
-                <br /> <br />
-                <label>Type: </label>
-                <input type="text" required value={type}
-                    onChange={(e)=>{setType(e.target.value)}}/>
-                <br /> <br />
-                <label>Price: </label>
-                <input type="number" required value={price}
-                    onChange={(e)=>{setPrice(e.target.value)}}/>$
-                <br /> <br />
-                {!isPending && <input type="submit" value="Add" />}
-                {isPending && <p>Adding Item.....</p>}
-            </form>
+            <h2 className="title" style={{color:"black"}}>Add New Item</h2>
+            <div>
+                <form onSubmit={handleSubmit} className="center">
+                    <div className="name">
+                        <p className="name-type-label">Name: </p>
+                        <input className="name-type" type="text" required value={name} 
+                            onChange={(e)=>{setName(e.target.value)}}/>
+                    </div>
 
+                    <div className="type-create">
+                        <p className="name-type-label">Type: </p>
+                        <input className="name-type" type="text" required value={type}
+                            onChange={(e)=>{setType(e.target.value)}}/>
+                    </div>
+
+                    <div style={{marginTop:20}}>
+                        <label className="price1">Price$: </label>
+                        <input className="price-input" type="number" required value={price}
+                            onChange={(e)=>{setPrice(e.target.value)}}/>
+                    </div>
+
+                    <div style={{marginTop:20}}>
+                        <label for="file-input" className="custom-file-label">Choose image</label>
+                        <input id="file-input" className="file-input" type="file" onChange={handleImage} accept="image/*"/>
+                    </div>
+                    {<div><input className="submit-button" type="submit" value={!isPending?"Add Item":"Adding Item ..."} /></div>}
+                </form>
+            </div>
         </div>
-         
-
-        );
+    );
 }
  
 export default Create;

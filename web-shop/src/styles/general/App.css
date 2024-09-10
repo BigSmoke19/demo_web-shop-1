@@ -1,9 +1,6 @@
 .App {
-  height:3000px;
   padding: 0;
+  height: 100vh;
 }
 
-.log-in {
-  padding-top: 100px;
-}
 

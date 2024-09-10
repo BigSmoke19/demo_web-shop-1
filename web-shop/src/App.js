@@ -3,8 +3,6 @@ import {BrowserRouter as Router,Route,Routes} from 'react-router-dom';
 import Create from './create';
 import Home from './home';
 import ItemDetails from './itemdetails';
-import Categories from './categories';
-import Header from './Header'
 import SignUp from './signup';
 import LogIn from './login';
 import Cart from './cart';
@@ -13,8 +11,6 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Header />
-        <Categories />
         <div className="content">
           <Routes>
           <Route exact path="/" element={<Home />} />

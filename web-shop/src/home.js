@@ -1,5 +1,7 @@
 import ItemsList from './itemslist';
 import useFetch from './usefetch';
+import Header from './Header.js'
+import Categories from './categories.js'
 
 const Home = () => {
     const url = "http://localhost/webshop-apis/getdata.php";
@@ -9,9 +11,13 @@ const Home = () => {
     
     return ( 
         <div>
-          {error && <div>{error}</div>}     
-          {isPending && <div>Loading....</div>}
-          {items && <ItemsList items = {items} title = "My Items" isHome={isHome} />}      
+          <Header />
+          <Categories />
+          <div>
+            {error && <div>{error}</div>}     
+            {isPending && <div>Loading....</div>}
+            {items && <ItemsList items = {items} title = "My Items" isHome={isHome} />}      
+          </div>
         </div>
      );
 }
