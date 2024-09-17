@@ -58,7 +58,7 @@ const Header = () => {
                 </button>
 
                 <div className={!isUserHover?"user-bar":"user-bar open-user-bar"}
-                    onMouseEnter={handleUserEnter} onMouseLeave={handleUserLeave}>
+                    onMouseEnter={handleUserEnter} onMouseLeave={handleUserLeave} onClick={handleUserClick}>
                     <Link to="/login">
                         Sign In
                     </Link>

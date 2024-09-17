@@ -2,7 +2,6 @@ import React from "react";
 import './styles/home/listItems.css';
 
 const ItemsList = (props) => {
-
     const items = props.items;
     const title = props.title;
     const url = "http://localhost:8000/items/";
@@ -10,6 +9,7 @@ const ItemsList = (props) => {
     const [isKey,setIsKey]=React.useState(null);
     const [likes,setLikes]=React.useState([]);
     const [dislike,setDisLike]=React.useState(false)
+    const [isAdded,setIsAdded]=React.useState(false)
     const isHome = props.isHome;
 
     function handleMouseEnter(id) {
@@ -34,21 +34,52 @@ const ItemsList = (props) => {
             ]);
           }
     }
-    const handleCart = (item) =>{
-      if(localStorage.getItem('items') !== null){
-        const cart = JSON.parse(localStorage.getItem('items'));
-        cart.push(item);
-        localStorage.setItem('items',JSON.stringify(cart));
-      }
-      else{
+    const handleCart = (e,item) =>{
+      if(JSON.parse(localStorage.getItem('items')) !== null) {
+          const add=e.target.value
+          let total=0
+          if(add === "Add To Cart" && !isAdded) {
+            const cart = JSON.parse(localStorage.getItem('items'))
+            cart.push(item)
+            localStorage.setItem('items',JSON.stringify(cart))
+            JSON.parse(localStorage.getItem('items')).forEach(item=>{
+              total+=item.price
+            })
+            console.log(total)
+            localStorage.setItem('total',total)
+            localStorage.setItem('quantity',JSON.parse(localStorage.getItem('items')).length)
+          }
+      } else{
+        localStorage.setItem('total',item.price)
+        localStorage.setItem('quantity',1)
         localStorage.setItem('items',JSON.stringify([item]));
       }
+      setIsAdded(true)
+    }
+
+    function checkIfAdded(item) {
+      let products=JSON.parse(localStorage.getItem('items'))
+      if(products === null) {
+        products=[]
+      }
+      let checked=false
+      products.forEach(element => {
+        if(element.id === item.id){
+          checked=true
+        }
+      })
+      return checked
     }
 
     return ( 
         <div>
-          <h2>{title}</h2>
-          <div className="display-items">
+           <h2>{title}</h2>
+           <div className={!isAdded?"cart-side-bar":"cart-side-bar open-cart-side-bar"}>
+              <button className="cancel-cart-bar" onClick={()=>setIsAdded(false)}>x</button>
+              <h1 style={{color:"white"}}>{localStorage.getItem('total')}</h1>
+              <h1 style={{color:"white"}}>{localStorage.getItem('quantity')}</h1>
+           </div>
+\          <div className="display-items">
               {Array.from(items).map((item) => (
                 <div className="item-container" key={item.id}>
                     <div className="thumbnail-container">
@@ -70,7 +101,10 @@ const ItemsList = (props) => {
                           <p className="price">
                               {item.price}$
                           </p>
-                          {isHome && <button className="add-to-cart" onClick={()=>handleCart(item)}>Add to cart</button>}
+                          {isHome && <button className={"add-to-cart"} value={checkIfAdded(item)?"Added":"Add To Cart"}
+                            onClick={(e)=>handleCart(e,item)}>
+                            {checkIfAdded(item)?"Added":"Add To Cart"}
+                          </button>}
                     </div>
                 </div>
               ))}
