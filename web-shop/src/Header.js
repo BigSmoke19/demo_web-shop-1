@@ -1,12 +1,16 @@
 import './styles/home/header.css';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useCookies } from 'react-cookie';
+//import { useCookies } from 'react-cookie';
 
 const Header = () => {
     const [isMenu,setIsMenu]=React.useState(false);
-    const [cookies,setCookies,removeCookie] = useCookies(['email']);
+    //const [cookies,setCookies,removeCookie] = useCookies(['email']);
     const [isUserHover,setIsUserHover]=React.useState(false);
+    let admin = false;
+    if(localStorage.getItem('isadmin') === "1"){
+        admin = true;
+    }
     /*const handleLogOut = () =>{
         removeCookie('email',{path: '/'});
     }*/
@@ -32,8 +36,8 @@ const Header = () => {
                         X
                     </button>
                 </div>
-                <button className="menu-icon-button" onClick={()=>setIsMenu(true)}>
-                    <img src="/images/icons/menu-icon.png" className="menu-icon" />
+                <button className="menu-icon-button" alt="" onClick={()=>setIsMenu(true)}>
+                    <img src="/images/icons/menu-icon.png" alt="" className="menu-icon" />
                 </button>
                 <p className="title">
                     Web-Shop
@@ -43,18 +47,18 @@ const Header = () => {
             <div className="middle-section">
                 <input className="search-bar" type="text" placeholder="Search for products" />
                 <button className="search-button">
-                    <img src="/images/icons/search-icon.png" className="search-icon" />
+                    <img src="/images/icons/search-icon.png" alt="" className="search-icon" />
                 </button>
             </div>
 
             <div className="right-section">
                 <button className="white-right-section-buttons">
-                    <img src="/images/icons/white-search-icon.png" className="white-search-icon" />
+                    <img src="/images/icons/white-search-icon.png" alt="" className="white-search-icon" />
                 </button>
                 <button className="right-section-buttons user-icon-button" 
                     onMouseEnter={handleUserEnter} onMouseLeave={handleUserLeave} onClick={handleUserClick}
                 >
-                    <img src="/images/icons/user-icon.png" className="user-icon" />
+                    <img src="/images/icons/user-icon.png" alt="" className="user-icon" />
                 </button>
 
                 <div className={!isUserHover?"user-bar":"user-bar open-user-bar"}
@@ -68,13 +72,19 @@ const Header = () => {
                 </div>
 
                 <button className="right-section-buttons">
-                    <img src="/images/icons/heart-icon.png" className="heart-icon" />
+                    <img src="/images/icons/heart-icon.png" alt="" className="heart-icon" />
                 </button>
                 <Link to='Cart'>
                 <button className="right-section-buttons">
-                    <img src="/images/icons/cart-icon.png" className="cart-icon" />
+                    <img src="/images/icons/cart-icon.png" alt="" className="cart-icon" />
                 </button>
                 </Link>
+                {admin &&
+                <Link to='Create'>
+                <button id="log-out">
+                    Admin
+                </button>
+                </Link>}
             </div>
         </header>
     )

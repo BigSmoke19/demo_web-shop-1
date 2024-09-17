@@ -3,13 +3,13 @@ import { useCookies } from "react-cookie";
 import { useNavigate,Link } from "react-router-dom";
 
 const LogIn = () => {
-    const [user,setUser] = useState(null);
+    const [user,setUser] = useState([]);
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
     const [errorMessage,setErrorMessage] = useState(null);
-    const [pending,setPending] = useState(null);
+    const [pending,setPending] = useState(false);
     const [myError,setMyError] = useState(null);
-    const [cookies,setCookies,removeCookies] = useCookies(['email']);
+    const [setCookies] = useCookies(['email']);
     const history = useNavigate();
     const url = `http://localhost/webshop-apis/checkuser.php?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
 
@@ -36,13 +36,16 @@ const LogIn = () => {
             })
             .then(data => {
                 setPending(false);
+                console.log(data);
                 setUser(data);
                 setMyError(null);
                 console.log(data);
 
-                if(user.email == true){
-                    if(user.password == true){
+                if(user.email === true){
+                    if(user.password === true){
                         setCookies('email',email,{path: '/'});
+                        localStorage.setItem('email',email);
+                        localStorage.setItem('isadmin',user.isadmin);
                         alert("Logged in!");
                         setPending(false);
                         history("/");
