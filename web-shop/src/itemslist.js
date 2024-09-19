@@ -40,17 +40,22 @@ const ItemsList = (props) => {
     const handleCart = (e,item) =>{
       if(JSON.parse(localStorage.getItem('items')) !== null) {
           const add=e.target.value
+          let total=0
           if(add === "Add To Cart" && !isAdded) {
             const cart = JSON.parse(localStorage.getItem('items'))
             cart.push(item)
             localStorage.setItem('items',JSON.stringify(cart))
             JSON.parse(localStorage.getItem('items')).forEach(item=>{
+              total+=item.price
             })
+            console.log(total)
+            localStorage.setItem('total',total)
+            localStorage.setItem('quantity',JSON.parse(localStorage.getItem('items')).length)
           }
       } else{
         localStorage.setItem('items',JSON.stringify([item]));
       }
-      setIsAdded(true)
+      setIsAdded(!isAdded)
     }
 
     function checkIfAdded(item) {
@@ -71,48 +76,9 @@ const ItemsList = (props) => {
         <div>
            <h2>{title}</h2>
            <div className={!isAdded?"cart-side-bar":"cart-side-bar open-cart-side-bar"}>
-              <h1 style={{color:"white"}}>My Cart</h1>
               <button className="cancel-cart-bar" onClick={()=>setIsAdded(false)}>x</button>
-              <div className="cart-side-bar-items">
-                  {Array.from(JSON.parse(localStorage.getItem('items'))).map(item=>(
-                    <div className="cart-side-bar-item" key={item.id}>
-                      <div style={{backgroundColor:"lightblue"}}>
-                        <img src={`data:image/jpeg;base64,${item.image}`} className="cart-side-bar-item-image" />
-                      </div>
-                      <div className="inner-container" style={{backgroundColor:"lightpink"}}>
-                        <div className="cart-side-bar-item-inner">
-                          <p>{item.name}</p>
-                          <p>x</p>
-                        </div>
-                        <div className="cart-side-bar-item-inner">
-                          <div className="bottom-inner-container">
-                            <button className="plus-button">+</button>
-                            <button>{quantities.forEach((quantity)=>{
-                              if(quantity.id === item.id) {
-                                setDisplayQuantity(quantity.quantity)
-                                return
-                              }
-                            })}{displayQuantity}</button>
-                            <button className="minus-button">-</button>
-                            <p style={{padding:"0",margin:"0"}}>{item.price}</p>
-                          </div>
-                          <div>
-                            <p>price</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                  <div className="cart-sidebar-bottom">
-                    <button>
-                      View Cart
-                    </button>
-                    <button>
-                      Checkout
-                    </button>
-                    <p>total:</p>
-                  </div>
-              </div>
+              <h1 style={{color:"white"}}>{localStorage.getItem('total')}</h1>
+              <h1 style={{color:"white"}}>{localStorage.getItem('quantity')}</h1>
            </div>
 \          <div className="display-items">
               {Array.from(items).map((item) => (

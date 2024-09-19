@@ -78,32 +78,6 @@
     background-color: rgb(15, 15, 15);
 }
 
-.cart-side-bar {
-    position: fixed;
-    top:0;
-    right:0;
-    min-height:100vh;
-    width:0;
-    background-color: black;
-    transition: width 1s ease-in-out;
-    z-index: 2;
-}
-
-.cart-side-bar.open-cart-side-bar {
-    width: 400px;
-}
-
-.cancel-cart-bar {
-    position: absolute;
-    top: 0;
-    left: -2px;
-    border: none;
-    background-color: white;
-    color: black;
-    font-size: 20px;
-    z-index: 2;
-}
-
 .cart-side-bar-item {
     display: grid;
     grid-template-columns: 25% 75%;
