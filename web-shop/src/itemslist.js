@@ -37,24 +37,15 @@ const ItemsList = (props) => {
     const handleCart = (e,item) =>{
       if(JSON.parse(localStorage.getItem('items')) !== null) {
           const add=e.target.value
-          let total=0
-          if(add === "Add To Cart" && !isAdded) {
+          if(add === "Add To Cart") {
             const cart = JSON.parse(localStorage.getItem('items'))
             cart.push(item)
             localStorage.setItem('items',JSON.stringify(cart))
-            JSON.parse(localStorage.getItem('items')).forEach(item=>{
-              total+=item.price
-            })
-            console.log(total)
-            localStorage.setItem('total',total)
-            localStorage.setItem('quantity',JSON.parse(localStorage.getItem('items')).length)
           }
       } else{
-        localStorage.setItem('total',item.price)
-        localStorage.setItem('quantity',1)
         localStorage.setItem('items',JSON.stringify([item]));
       }
-      setIsAdded(true)
+      setIsAdded(!isAdded)
     }
 
     function checkIfAdded(item) {
@@ -74,11 +65,6 @@ const ItemsList = (props) => {
     return ( 
         <div>
            <h2>{title}</h2>
-           <div className={!isAdded?"cart-side-bar":"cart-side-bar open-cart-side-bar"}>
-              <button className="cancel-cart-bar" onClick={()=>setIsAdded(false)}>x</button>
-              <h1 style={{color:"white"}}>{localStorage.getItem('total')}</h1>
-              <h1 style={{color:"white"}}>{localStorage.getItem('quantity')}</h1>
-           </div>
 \          <div className="display-items">
               {Array.from(items).map((item) => (
                 <div className="item-container" key={item.id}>
