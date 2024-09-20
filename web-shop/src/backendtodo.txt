@@ -7,11 +7,12 @@ add security measures for data entries in signups ✔        **
 manage wishlisting and adding product to cart ✔            **
 add security measures for admin logins ✔                   **
 update admin page for deleting adding and editing items     *
-enhance the cart mechanism                                  *
+enhance the cart mechanism ✔                               **
 add orders database                                         *
 manage ordering                                             *
 manage serach bar action                                    *
-test website for vulnerbities                               *
+test website for vulnerbilities                             *
+clean code                                                  *
 deploy the database online                                  *
 run multiple tests for whole website                        *
 make necessary updates                                      *

@@ -42,20 +42,21 @@ const ItemsList = (props) => {
           const add=e.target.value
           let total=0
           if(add === "Add To Cart" && !isAdded) {
-            const cart = JSON.parse(localStorage.getItem('items'))
-            cart.push(item)
-            localStorage.setItem('items',JSON.stringify(cart))
+            const cart = JSON.parse(localStorage.getItem('items'));
+            cart.push({...item,"quantity":1});
+            localStorage.setItem('items',JSON.stringify(cart));
             JSON.parse(localStorage.getItem('items')).forEach(item=>{
-              total+=item.price
+              total+=item.price;
             })
-            console.log(total)
-            localStorage.setItem('total',total)
-            localStorage.setItem('quantity',JSON.parse(localStorage.getItem('items')).length)
+            console.log(total);
+            localStorage.setItem('total',total);
+            localStorage.setItem('quantity',JSON.parse(localStorage.getItem('items')).length);
           }
       } else{
-        localStorage.setItem('items',JSON.stringify([item]));
+        localStorage.setItem('items',JSON.stringify([{...item,"quantity":1}]));
+        //console.log(localStorage.getItem('items'));
       }
-      setIsAdded(!isAdded)
+      setIsAdded(!isAdded);
     }
 
     function checkIfAdded(item) {
