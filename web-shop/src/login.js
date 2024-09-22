@@ -9,7 +9,7 @@ const LogIn = () => {
     const [errorMessage,setErrorMessage] = useState(null);
     const [pending,setPending] = useState(false);
     const [myError,setMyError] = useState(null);
-    const [setCookies] = useCookies(['email']);
+    const [cookies,setCookies] = useCookies(['email']);
     const history = useNavigate();
     const url = `http://localhost/webshop-apis/checkuser.php?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
 
@@ -35,14 +35,13 @@ const LogIn = () => {
                 return res.json() // extract json data from response
             })
             .then(data => {
-                setPending(false);
-                console.log(data);
                 setUser(data);
                 setMyError(null);
-                console.log(data);
 
-                if(user.email === true){
-                    if(user.password === true){
+                setPending(false);
+                console.log(user.email,typeof(user.email));
+                if(user.email === 1){
+                    if(user.password === 1){
                         setCookies('email',email,{path: '/'});
                         localStorage.setItem('email',email);
                         localStorage.setItem('isadmin',user.isadmin);

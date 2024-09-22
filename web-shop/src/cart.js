@@ -1,9 +1,16 @@
 import { useEffect, useState } from 'react';
-import './styles/cart/cart.css'
+import './styles/cart/cart.css';
+import { useCookies } from 'react-cookie';
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
     const [items,setItems] = useState(JSON.parse(localStorage.getItem('items')));
     const [total,setTotal] = useState(0);
+    const [cookies] = useCookies(['email']);
+    const userEmail = cookies.email;
+    const url = "http://localhost/webshop-apis/addorder.php";
+    const history = useNavigate();
+
 
     useEffect(()=>{
         localStorage.setItem('items',JSON.stringify(items));
@@ -16,6 +23,7 @@ const Cart = () => {
         setTotal(newTotal);
 
     },[items]);
+
 
     const handeleDeleteItem = (id) =>{
         setItems(items.filter((item)=>item.id !== id));
@@ -47,6 +55,21 @@ const Cart = () => {
         }
     }
 
+    const handleCheckout = () =>{
+        console.log(JSON.stringify({"data":items,"useremail":userEmail,"total":total}));
+        if(total !== 0){
+            fetch(url,{
+                method:'POST',
+                headers:{"content-type":"application/json"},
+                body:JSON.stringify({"data":items,"useremail":userEmail,"total":total})
+            }).then(
+                () =>{
+                    alert("order marked!");
+                    history("/");
+                }
+            );        
+        }
+    }
     return ( 
         <div className="cart">
             <div className="items-container">
@@ -90,6 +113,9 @@ const Cart = () => {
                 <div className='cart-totals'>
                     <p>Total</p>
                     <p>{total}$</p>
+                </div>
+                <div className='cart-totals'>
+                    <button onClick={handleCheckout}>Checkout</button>
                 </div>
             </div>
         </div>
