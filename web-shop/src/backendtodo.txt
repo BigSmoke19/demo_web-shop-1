@@ -9,12 +9,13 @@ add security measures for admin logins ✔                   **
 enhance the cart mechanism ✔                               **
 add orders database ✔                                      **
 manage ordering ✔                                          **
+setup emails for ordering and eamil verification ✔         **
 update admin page for deleting adding and editing items     *
 manage serach bar action                                    *
 test website for vulnerbilities                             *
 clean code                                                  *
+solve security issues                                       *
 deploy the database online                                  *
-setup emails for ordering                                   *
 run multiple tests for whole website                        *
 make necessary updates                                      *
 ------------------------------------------------------------*

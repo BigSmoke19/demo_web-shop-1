@@ -7,6 +7,7 @@ import SignUp from './signup';
 import LogIn from './login';
 import Cart from './cart';
 import ProtectedRoute from './ProtectedRoute';
+import VerifyEmail from './verifyemail';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="/login/signup" element={<SignUp />} />
             <Route path="/items/:id" element={<ItemDetails />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/verifyemail" element={<VerifyEmail />} />
           </Routes>
         </div>
       </div>

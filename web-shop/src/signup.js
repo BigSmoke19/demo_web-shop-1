@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
+
 
 const SignUp = () => {
     const [name,setName] = useState(null);
@@ -9,16 +9,15 @@ const SignUp = () => {
     const [confirmPass,setConfirmPass] = useState(null);
     const [errorMessage,setErrorMessage] = useState(null);
     const [isPending,setIsPending] = useState(false);
-    const [cookies,setCookies,removeCookies] = useCookies(['email']);
     const history = useNavigate();
-    const url = "http://localhost/webshop-apis/adduser.php";
+    const url = "http://localhost/webshop-apis/verifyemail.php?email="+email;
 
     const checkCredentials = () =>{
         if (name === null || email === null || password === null || confirmPass === null){
             setErrorMessage("Missing Credentials!!");
             return false;
         }
-        if(password != confirmPass){
+        if(password !== confirmPass){
             setErrorMessage("Password Mismatch!!!");
             return false;
         }
@@ -29,21 +28,23 @@ const SignUp = () => {
     const handleSubmit = (e) =>{
         e.preventDefault();
         if(checkCredentials()){
-            const user = {name,email,password};
             setIsPending(true);
-            console.log(JSON.stringify(user));
-            fetch(url,{
-                method:'POST',
-                headers:{"content-type":"application/json"},
-                body:JSON.stringify(user)
-            }).then(
-                () =>{
-                    setCookies('email',email,{path: '/'});
-                    alert("Signed Up!");
+            fetch(url)
+                .then(res => {
+                    if(!res.ok){
+                        throw Error("Faild");
+                    }
+                    return res.json() // extract json data from response
+                })
+                .then(data => {
+                    console.log(data);
                     setIsPending(false);
-                    history("/");
-                }
-            );            
+                    localStorage.setItem('name',name);
+                    localStorage.setItem('sEmail',email);
+                    localStorage.setItem('password',password);
+                    localStorage.setItem('code',parseInt(data));
+                    history('/verifyemail');
+                });
         }
     }
     return ( 

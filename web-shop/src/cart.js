@@ -56,8 +56,7 @@ const Cart = () => {
     }
 
     const handleCheckout = () =>{
-        console.log(JSON.stringify({"data":items,"useremail":userEmail,"total":total}));
-        if(total !== 0){
+        if(total !== 0 && userEmail != null){
             fetch(url,{
                 method:'POST',
                 headers:{"content-type":"application/json"},
