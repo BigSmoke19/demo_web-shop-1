@@ -10,9 +10,15 @@
 .item-container {
     width: 100%;
 }
+.edit-item-container {
+    width: 50%;
+    margin-left: 25%;
+    margin-right:50%;
+}
 
 .thumbnail-container {
     position: relative;
+    border: 2px black solid;
 }
 
 .thumbnail {
@@ -76,6 +82,7 @@
 
 .add-to-cart:hover {
     background-color: rgb(15, 15, 15);
+    cursor: pointer;
 }
 
 .cart-side-bar-item {

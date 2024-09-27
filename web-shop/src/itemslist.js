@@ -1,6 +1,6 @@
 import React from "react";
 import './styles/home/listItems.css';
-
+import { useNavigate } from "react-router-dom";
 const ItemsList = (props) => {
 
     const items = props.items;
@@ -14,6 +14,11 @@ const ItemsList = (props) => {
     const [quantities,setQuantities]=React.useState(Array.from(items).map(item=>({id:item.id,quantity:1})))
     const [displayQuantity,setDisplayQuantity]=React.useState(0)
     const isHome = props.isHome;
+    const history = useNavigate();
+    let isAdmin = false;
+    if(localStorage.getItem('isadmin') === "1"){
+        isAdmin = true;
+    }  
 
     function handleMouseEnter(id) {
       setIsKey(id)
@@ -73,6 +78,11 @@ const ItemsList = (props) => {
       return checked
     }
 
+    const handleEdit = (item) =>{
+      localStorage.setItem('editItem',JSON.stringify(item));
+      history("/edit");
+    }
+
     return ( 
         <div>
            <h2>{title}</h2>
@@ -107,6 +117,7 @@ const ItemsList = (props) => {
                             onClick={(e)=>handleCart(e,item)}>
                             {checkIfAdded(item)?"Added":"Add To Cart"}
                           </button>}
+                          {isAdmin && <button className={"add-to-cart"} onClick={()=>handleEdit(item)}>Edit</button>}
                     </div>
                 </div>
               ))}

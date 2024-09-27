@@ -11,7 +11,7 @@ add orders database ✔                                      **
 manage ordering ✔                                          **
 setup emails for ordering and eamil verification ✔         **
 update admin page for deleting adding and editing items     *
-manage serach bar action                                    *
+manage serach bar and category filtering                    *
 test website for vulnerbilities                             *
 clean code                                                  *
 solve security issues                                       *
