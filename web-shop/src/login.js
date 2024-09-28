@@ -56,9 +56,11 @@ const LogIn = () => {
 
             setPending(true);
 
-            fetch(url + `?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`,{
-                method:'GET',
+            const user = {email,password};
+            fetch(url,{
+                method:'POST',
                 headers:{"content-type":"application/json"},
+                body:JSON.stringify(user)
             }).then(res => {
                 if(!res.ok){
                     throw Error("Faild");

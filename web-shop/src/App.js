@@ -25,6 +25,14 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+            path="/edit"
+              element={
+                <ProtectedRoute>
+                  <Edit />
+                </ProtectedRoute>
+              }
+            />
             <Route exact path="/create" element={<Create />} />
             <Route path="/login" element={<LogIn />} />
             <Route path="/login/signup" element={<SignUp />} />

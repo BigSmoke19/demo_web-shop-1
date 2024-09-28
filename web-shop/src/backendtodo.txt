@@ -10,7 +10,7 @@ enhance the cart mechanism ✔                               **
 add orders database ✔                                      **
 manage ordering ✔                                          **
 setup emails for ordering and eamil verification ✔         **
-update admin page for deleting adding and editing items     *
+update admin page for deleting adding and editing items ✔  **
 manage serach bar and category filtering                    *
 test website for vulnerbilities                             *
 clean code                                                  *
@@ -19,4 +19,4 @@ deploy the database online                                  *
 run multiple tests for whole website                        *
 make necessary updates                                      *
 ------------------------------------------------------------*
-completion level: 65%
+completion level: 70%
