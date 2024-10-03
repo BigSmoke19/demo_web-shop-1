@@ -14,9 +14,8 @@ const VerifyEmail = () => {
     const email = localStorage.getItem('sEmail');
     const password = localStorage.getItem('password');
     const [cookies,setCookies,removeCookies] = useCookies(['email']);
-    console.log(email);
-    console.log(JSON.stringify(localStorage.getItem('sEmail')));
-    console.log("300");
+    const token = "fieuifvhwou84gfhvoh347tyfjrgfvi7g47fglifvula74cv4gfvliagf47g4fvhlqi7gf47fvifgrfgtfgigfewweiokug7sheoif8tgb93e73hpij9sd7wj0if";
+
     const handleChange = (value) => {
         setNumber(value);
     }
@@ -28,7 +27,7 @@ const VerifyEmail = () => {
         if(parseInt(number) === parseInt(code)){
             console.log(101);
             setIsPending(true);
-            const user = {name,email,password};
+            const user = {name,email,password,token};
             fetch(url,{
                 method:'POST',
                 headers:{"content-type":"application/json"},

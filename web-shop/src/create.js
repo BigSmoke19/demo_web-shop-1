@@ -10,10 +10,11 @@ const Create = () => {
     const [isPending,setIsPending] = useState(false);
     const history = useNavigate();
     const url = "http://localhost/webshop-apis/adddata.php";
+    const token = localStorage.getItem('createToken');   //"nncfedbjub5945f98vdpojfcbhhygcfdev26948dvjioH%637w7dh5f4fkipkofcvok&fjfiijsduEH82884fgdjffd78dfkojdf596dff";
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const item = {name,type,price,image};
+        const item = {name,type,price,image,token};
         setIsPending(true);
         console.log(JSON.stringify(item));
         fetch(url,{

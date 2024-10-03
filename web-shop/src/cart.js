@@ -10,6 +10,7 @@ const Cart = () => {
     const userEmail = cookies.email;
     const url = "http://localhost/webshop-apis/addorder.php";
     const history = useNavigate();
+    const token = localStorage.getItem('orderToken');
 
 
     useEffect(()=>{
@@ -60,7 +61,7 @@ const Cart = () => {
             fetch(url,{
                 method:'POST',
                 headers:{"content-type":"application/json"},
-                body:JSON.stringify({"data":items,"useremail":userEmail,"total":total})
+                body:JSON.stringify({"data":items,"useremail":userEmail,"total":total,"token":token})
             }).then(
                 () =>{
                     alert("order marked!");

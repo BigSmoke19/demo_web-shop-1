@@ -34,9 +34,16 @@ const LogIn = () => {
                 console.log(cookies);
                 localStorage.setItem('email',email);
                 localStorage.setItem('isadmin',user.isadmin);
-                alert("Logged in!");
                 setPending(false);
-                history("/");
+                localStorage.setItem('orderToken',user.ordertoken);
+                if(parseInt(user.isadmin) === 1){
+                    localStorage.setItem('createToken',user.token);
+                    alert("Hello admin");
+                    history("/create");  
+                }else{
+                    alert("Logged in!");
+                    history("/");
+                }
             }else{
                 setPending(false);
                 setErrorMessage("Wrong Password!!");

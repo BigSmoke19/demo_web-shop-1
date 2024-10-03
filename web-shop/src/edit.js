@@ -15,6 +15,7 @@ const Edit = () => {
     const history = useNavigate();
     const url = "http://localhost/webshop-apis/edit.php";
     const url2 = "http://localhost/webshop-apis/delete.php";
+    const token = localStorage.getItem('createToken');
 
     const handleImage = (event) =>{
         const file = event.target.files[0];
@@ -29,7 +30,7 @@ const Edit = () => {
     };
 
     const handleSave = () => {
-        const newitem = {id,name,type,price,image};
+        const newitem = {id,name,type,price,image,token};
         setIsPending(true);
         console.log(JSON.stringify(newitem));
         fetch(url,{
@@ -47,7 +48,7 @@ const Edit = () => {
 
     const handleDelete = () => {
         if(true){
-            const newitem = {id};
+            const newitem = {id,token};
             setIsPending(true);
             console.log(JSON.stringify(newitem));
             fetch(url2,{

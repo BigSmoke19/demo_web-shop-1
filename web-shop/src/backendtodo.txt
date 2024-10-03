@@ -11,10 +11,10 @@ add orders database ✔                                      **
 manage ordering ✔                                          **
 setup emails for ordering and eamil verification ✔         **
 update admin page for deleting adding and editing items ✔  **
+solve apis security issues ✔                               **
 manage serach bar and category filtering                    *
 test website for vulnerbilities                             *
-clean code                                                  *
-solve security issues                                       *
+clean code                                                  *                                       
 deploy the database online                                  *
 run multiple tests for whole website                        *
 make necessary updates                                      *
