@@ -11,8 +11,6 @@ const ItemsList = (props) => {
     const [likes,setLikes]=React.useState([]);
     const [dislike,setDisLike]=React.useState(false)
     const [isAdded,setIsAdded]=React.useState(false)
-    const [quantities,setQuantities]=React.useState(Array.from(items).map(item=>({id:item.id,quantity:1})))
-    const [displayQuantity,setDisplayQuantity]=React.useState(0)
     const isHome = props.isHome;
 
     function handleMouseEnter(id) {
@@ -41,7 +39,7 @@ const ItemsList = (props) => {
       if(JSON.parse(localStorage.getItem('items')) !== null) {
           const add=e.target.value
           let total=0
-          if(add === "Add To Cart" && !isAdded) {
+          if(add === "Add To Cart") {
             const cart = JSON.parse(localStorage.getItem('items'));
             cart.push({...item,"quantity":1});
             localStorage.setItem('items',JSON.stringify(cart));
@@ -73,19 +71,25 @@ const ItemsList = (props) => {
       return checked
     }
 
+    const handleZoomImage = (e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left; // X coordinate of the cursor in the container
+        const y = e.clientY - rect.top;  // Y coordinate of the cursor in the container
+
+        // Calculate the percentage of the cursor's position within the container
+        const xPercent = (x / e.currentTarget.offsetWidth) * 100;
+        const yPercent = (y / e.currentTarget.offsetHeight) * 100;
+        // Set the background position dynamically based on the cursor position
+        e.currentTarget.style.transformOrigin = `${xPercent}% ${yPercent}%`;
+    }
+
     return ( 
         <div>
-           <h2>{title}</h2>
-           <div className={!isAdded?"cart-side-bar":"cart-side-bar open-cart-side-bar"}>
-              <button className="cancel-cart-bar" onClick={()=>setIsAdded(false)}>x</button>
-              <h1 style={{color:"white"}}>{localStorage.getItem('total')}</h1>
-              <h1 style={{color:"white"}}>{localStorage.getItem('quantity')}</h1>
-           </div>
-\          <div className="display-items">
+          <div className="display-items">
               {Array.from(items).map((item) => (
                 <div className="item-container" key={item.id}>
                     <div className="thumbnail-container">
-                          <img className="thumbnail" src={`data:image/jpeg;base64,${item.image}`}/>
+                          <img onMouseMove={(e)=>handleZoomImage(e)} className="thumbnail" src={`data:image/jpeg;base64,${item.image}`}/>
                           {<button className="like-button" onClick={()=>handleLikeClick(parseInt(item.id))} onMouseEnter={()=>handleMouseEnter(item.id)} onMouseLeave={()=>handleMouseLeave()}>
                               {!likes.includes(parseInt(item.id)) && (!isRed || isKey!==item.id || dislike) && <img src="/images/icons/heart-icon.png" className="like-icon"/>}
                               {!likes.includes(parseInt(item.id)) && !dislike && (isRed && isKey===item.id) && <img src="/images/icons/red-wishlist-icon.png" className="like-icon"/>}

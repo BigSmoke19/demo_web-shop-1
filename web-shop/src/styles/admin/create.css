@@ -108,5 +108,10 @@ background-color: #0056b3;
     font-weight: bold;
     color:white;
     font-family: "Montserrat", sans-serif;
+    transition: background-color 0.5s ease-in-out;
+}
+
+.submit-button:hover {
+    background-color: darkgreen;
 }
 

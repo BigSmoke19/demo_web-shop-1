@@ -8,10 +8,6 @@ const Categories = () => {
             <div className="left-navbar"></div>
             <div className="categories">
                 <Link className="link" to="/">Home</Link>
-                <Link className="link" to="Create">Create</Link>
-                <Link className="link" to="SignUp">SignUp</Link>
-                {!cookies.email && <Link className="link" to="LogIn">Log In</Link>}
-                {cookies.email && <p className="link">{cookies.email}</p>}
             </div>
             <div className="right-navbar"></div>
         </nav>
