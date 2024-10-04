@@ -1,6 +1,6 @@
 import React from "react";
 import './styles/home/listItems.css';
-
+import { useNavigate } from "react-router-dom";
 const ItemsList = (props) => {
 
     const items = props.items;
@@ -12,6 +12,11 @@ const ItemsList = (props) => {
     const [dislike,setDisLike]=React.useState(false)
     const [isAdded,setIsAdded]=React.useState(false)
     const isHome = props.isHome;
+    const history = useNavigate();
+    let isAdmin = false;
+    if(localStorage.getItem('isadmin') === "1"){
+        isAdmin = true;
+    }  
 
     function handleMouseEnter(id) {
       setIsKey(id)
@@ -82,6 +87,11 @@ const ItemsList = (props) => {
         // Set the background position dynamically based on the cursor position
         e.currentTarget.style.transformOrigin = `${xPercent}% ${yPercent}%`;
     }
+    
+    const handleEdit = (item) =>{
+      localStorage.setItem('editItem',JSON.stringify(item));
+      history("/edit");
+    }
 
     return ( 
         <div>
@@ -111,6 +121,7 @@ const ItemsList = (props) => {
                             onClick={(e)=>handleCart(e,item)}>
                             {checkIfAdded(item)?"Added":"Add To Cart"}
                           </button>}
+                          {isAdmin && <button className={"add-to-cart"} onClick={()=>handleEdit(item)}>Edit</button>}
                     </div>
                 </div>
               ))}

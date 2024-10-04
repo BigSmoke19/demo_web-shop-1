@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate,Link } from "react-router-dom";
 
 const LogIn = () => {
-    const [user,setUser] = useState([]);
+    const [user,setUser] = useState(null);
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
     const [errorMessage,setErrorMessage] = useState(null);
@@ -11,7 +11,13 @@ const LogIn = () => {
     const [myError,setMyError] = useState(null);
     const [cookies,setCookies] = useCookies(['email']);
     const history = useNavigate();
-    const url = `http://localhost/webshop-apis/checkuser.php?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`;
+    const url = `http://localhost/webshop-apis/checkuser.php`;
+
+    useEffect(()=>{
+        if(user !== null){
+            checkUser();
+        }
+    },[user]);
 
     const checkCredentials = () =>{
         if ( email === "" || password === ""){
@@ -21,13 +27,47 @@ const LogIn = () => {
         setErrorMessage(null);
         return true;
     }
+    const checkUser = () =>{
+        if(parseInt(user.email) === 1){
+            if(parseInt(user.password) === 1){
+                setCookies('email',email,{path: '/'});
+                console.log(cookies);
+                localStorage.setItem('email',email);
+                localStorage.setItem('isadmin',user.isadmin);
+                setPending(false);
+                localStorage.setItem('orderToken',user.ordertoken);
+                if(parseInt(user.isadmin) === 1){
+                    localStorage.setItem('createToken',user.token);
+                    alert("Hello admin");
+                    history("/create");  
+                }else{
+                    alert("Logged in!");
+                    history("/");
+                }
+            }else{
+                setPending(false);
+                setErrorMessage("Wrong Password!!");
+                setPassword("");
+            }
+        }else{
+            setPending(false);
+            setErrorMessage("Email not found!!");
+            setEmail("");
+        }
+    }
 
     const handleSubmit = (e) =>{
         e.preventDefault();
+        console.log("email: " + email, "pass: "+ password);
         if(checkCredentials()){
+
+            setPending(true);
+
+            const user = {email,password};
             fetch(url,{
-                method:'GET',
+                method:'POST',
                 headers:{"content-type":"application/json"},
+                body:JSON.stringify(user)
             }).then(res => {
                 if(!res.ok){
                     throw Error("Faild");
@@ -35,27 +75,9 @@ const LogIn = () => {
                 return res.json() // extract json data from response
             })
             .then(data => {
+                console.log(data);
                 setUser(data);
-                setMyError(null);
-
-                setPending(false);
-                console.log(user.email,typeof(user.email));
-                if(user.email === 1){
-                    if(user.password === 1){
-                        setCookies('email',email,{path: '/'});
-                        localStorage.setItem('email',email);
-                        localStorage.setItem('isadmin',user.isadmin);
-                        alert("Logged in!");
-                        setPending(false);
-                        history("/");
-                    }else{
-                        setErrorMessage("Wrong Password!!");
-                        setPassword("");
-                    }
-                }else{
-                    setErrorMessage("Email not found!!");
-                    setEmail("");
-                }
+                setMyError(data.message);
             });   
         }
     }
