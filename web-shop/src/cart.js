@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import './styles/cart/cart.css';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from "react-router-dom";
+import Header from './Header.js';
+import Categories from './categories.js';
 
 const Cart = () => {
     const [items,setItems] = useState(JSON.parse(localStorage.getItem('items')));
@@ -70,52 +72,56 @@ const Cart = () => {
             );        
         }
     }
-    return ( 
-        <div className="cart">
-            <div className="items-container">
-                <div className="items-title">
-                    <div className="items-title-left-section">
-                        <p>PRODUCT</p>
-                    </div>
-                    <div className='items-title-right-section'>
-                        <p>PRICE</p>
-                        <p>QUANTITY</p>
-                        <p>SUBTOTAL</p>
-                    </div>
-                </div>
-                <div className="products">
-                    {Array.from(items).map((item=>(
-                        <div className="product">
-                            <div className="products-left-section">
-                                <button onClick={()=>handeleDeleteItem(item.id)}>X</button>
-                                <img src={`data:image/jpeg;base64,${item.image}`} className="product-thumbnail"/>
-                                <p>{item.name}</p>
-                            </div>
-                            <div className="products-right-section">
-                                <p>${item.price}</p>
-                                <div style={{paddingRight:"10px"}}>
-                                    <button onClick={(e)=>handeleQuantity("+",item.id)}>+</button>
-                                    <span> {item.quantity} </span>
-                                    <button onClick={(e)=>handeleQuantity("-",item.id)}>-</button>
-                                </div>
-                                <p>${item.price * item.quantity}</p>
-                            </div>
+    return (
+        <div> 
+            <Header />
+            <Categories />
+            <div className="cart">
+                <div className="items-container">
+                    <div className="items-title">
+                        <div className="items-title-left-section">
+                            <p className="title-names">PRODUCT</p>
                         </div>
-                    )))}
+                        <div className='items-title-right-section'>
+                            <p className="title-names">PRICE</p>
+                            <p className="title-names">QUANTITY</p>
+                            <p className="title-names">SUBTOTAL</p>
+                        </div>
+                    </div>
+                    <div className="products">
+                        {Array.from(items).map((item=>(
+                            <div className="product">
+                                <div className="products-left-section">
+                                    <button className="cancel-button" onClick={()=>handeleDeleteItem(item.id)}>X</button>
+                                    <img src={`data:image/jpeg;base64,${item.image}`} className="product-thumbnail"/>
+                                    <p className={{marginRight:20}}>{item.name}</p>
+                                </div>
+                                <div className="products-right-section">
+                                    <p className="official-price">${item.price}</p>
+                                    <div className="quantity-contianer" style={{paddingRight:"10px"}}>
+                                        <button className="plus-button" onClick={(e)=>handeleQuantity("+",item.id)}>+</button>
+                                        <span style={{marginBottom:15}}> {item.quantity} </span>
+                                        <button className="minus-button" onClick={(e)=>handeleQuantity("-",item.id)}>-</button>
+                                    </div>
+                                    <p style={{color:'LightBlue',fontSize:17,fontWeight:'bold'}}>${item.price * item.quantity}</p>
+                                </div>
+                            </div>
+                        )))}
+                    </div>
                 </div>
-            </div>
-            <div className="order-summary">
-                <h1>Cart Totals</h1>
-                <div className="cart-totals">
-                    <p>SubTotal</p>
-                    <p>{total}$</p>
-                </div>
-                <div className='cart-totals'>
-                    <p>Total</p>
-                    <p>{total}$</p>
-                </div>
-                <div className='cart-totals'>
-                    <button onClick={handleCheckout}>Checkout</button>
+                <div className="order-summary">
+                    <h1>Cart Totals</h1>
+                    <div className="cart-totals">
+                        <p style={{fontWeight:'bold'}}>SubTotal</p>
+                        <p>{total}$</p>
+                    </div>
+                    <div className='cart-totals'>
+                        <p style={{fontWeight:'bold'}}>Total</p>
+                        <p>{total}$</p>
+                    </div>
+                    <div className='cart-totals'>
+                        <button className="checkout" onClick={handleCheckout}>Checkout</button>
+                    </div>
                 </div>
             </div>
         </div>
