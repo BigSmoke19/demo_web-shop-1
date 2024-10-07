@@ -1,16 +1,20 @@
 import './styles/home/header.css';
-import React from 'react';
-import { Link } from 'react-router-dom';
-//import { useCookies } from 'react-cookie';
+import React, {useContext} from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { DataContext } from './context';
 
 const Header = () => {
     const [isMenu,setIsMenu]=React.useState(false);
     //const [cookies,setCookies,removeCookie] = useCookies(['email']);
     const [isUserHover,setIsUserHover]=React.useState(false);
+    const history = useNavigate();
     let admin = false;
     if(localStorage.getItem('isadmin') === "1"){
         admin = true;
     }
+
+    const [{search,setSearch},{items, setItems}] = useContext(DataContext);
+
     /*const handleLogOut = () =>{
         removeCookie('email',{path: '/'});
     }*/
@@ -24,6 +28,15 @@ const Header = () => {
 
     function handleUserClick() {
         setIsUserHover(!isUserHover)
+    }
+    
+    const handleSearch = (s) =>{
+        setSearch(s);
+    }
+
+    const handleWebShop = ()=>{
+        history("/");
+        window.location.reload();
     }
     return(
         <header>
@@ -39,13 +52,13 @@ const Header = () => {
                 <button className="menu-icon-button" alt="" onClick={()=>setIsMenu(true)}>
                     <img src="/images/icons/menu-icon.png" alt="" className="menu-icon" />
                 </button>
-                <p className="title">
+                <p className="title" onClick={handleWebShop}>
                     Web-Shop
                 </p>
             </div>
 
             <div className="middle-section">
-                <input className="search-bar" type="text" placeholder="Search for products" />
+                <input className="search-bar" onChange={(e)=>handleSearch(e.target.value)} type="text" placeholder="Search for products" />
                 <button className="search-button">
                     <img src="/images/icons/search-icon.png" alt="" className="search-icon" />
                 </button>

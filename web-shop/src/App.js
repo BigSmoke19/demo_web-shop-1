@@ -9,9 +9,11 @@ import Cart from './cart';
 import ProtectedRoute from './ProtectedRoute';
 import VerifyEmail from './verifyemail';
 import Edit from './edit';
+import { DataProvider } from './context';
 
 function App() {
   return (
+    <DataProvider>
     <Router>
       <div className="App">
         <div className="content">
@@ -44,6 +46,7 @@ function App() {
         </div>
       </div>
     </Router>
+    </DataProvider>
   );
 }
 

@@ -23,6 +23,7 @@ header {
     color:white;
     font-size: 26px;
     vertical-align: top;
+    cursor: pointer;
 }
 
 .menu-icon-button {

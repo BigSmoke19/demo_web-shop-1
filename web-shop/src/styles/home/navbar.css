@@ -28,6 +28,10 @@ nav {
     color:whitesmoke;
     font-weight: bold;
     padding-right: 20px;
+    cursor: pointer;
+  }
+  .link:hover{
+    background-color: rgb(58, 57, 57);
   }
   
   .left-navbar {
