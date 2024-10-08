@@ -2,7 +2,6 @@ import {useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import './styles/home/listItems.css';
 
-
 const Edit = () => {
 
     const item = JSON.parse(localStorage.getItem('editItem'));
@@ -16,34 +15,51 @@ const Edit = () => {
     const url = "http://localhost/webshop-apis/edit.php";
     const url2 = "http://localhost/webshop-apis/delete.php";
     const token = localStorage.getItem('createToken');
+    const fileTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    const fileSize =  5 * 1024 * 1024;
+    const [error,setError] = useState(null);
 
-    const handleImage = (event) =>{
-        const file = event.target.files[0];
+    const handleImage = async (event) =>{
+        let file = event.target.files[0];
         if(file){
-            const reader = new FileReader();
-            reader.onloadend = () =>{
-                setImage(reader.result);
+            if(file.size <= fileSize && fileTypes.includes(file.type)){
+                const reader = new FileReader();
+                reader.onloadend = () =>{
+                    setImage(reader.result);
+                }
+                reader.readAsDataURL(file);
+                console.log(image);
+            }else{
+                if(!fileTypes.includes(file.type)){
+                    setError("Wrong file type!!");
+                }else{
+                    setError("image must be less than 5mb!!");
+                }
             }
-            reader.readAsDataURL(file);
-            //console.log(image);
+        }else{
+            setError("Error in file upload!!");
         }
     };
 
     const handleSave = () => {
-        const newitem = {id,name,type,price,image,token};
-        setIsPending(true);
-        console.log(JSON.stringify(newitem));
-        fetch(url,{
-            method:'POST',
-            headers:{"content-type":"application/json"},
-            body:JSON.stringify(newitem)
-        }).then(
-            () =>{
-                alert("Edit Saved!!");
-                setIsPending(false);
-                history("/");
-            }
-        );
+        if(name !== "" && type !== "" && price != 0 && image){
+            const newitem = {id,name,type,price,image,token};
+            setIsPending(true);
+            console.log(JSON.stringify(newitem));
+            fetch(url,{
+                method:'POST',
+                headers:{"content-type":"application/json"},
+                body:JSON.stringify(newitem)
+            }).then(
+                () =>{
+                    alert("Edit Saved!!");
+                    setIsPending(false);
+                    history("/");
+                }
+            );
+        }else{
+            setError("Missing Credentials!!!")
+        }
     };
 
     const handleDelete = () => {
@@ -84,6 +100,7 @@ const Edit = () => {
             </div>
             <button className={"add-to-cart"} onClick={handleSave}>Save</button>
             <button style={{backgroundColor:"red"}} className={"add-to-cart"} onClick={handleDelete}>Delete</button>
+            {error && <p style={{color:'red'}}>{error}</p>}
             {ispending && <p>Saving changes...</p>}
     </div>
      );

@@ -107,7 +107,7 @@ const ItemsList = (props) => {
                           </button>}
                     </div>
 
-                    <div>
+                    <div className="detail-container">
                           <p className="item-name">
                               {item.name}
                           </p>

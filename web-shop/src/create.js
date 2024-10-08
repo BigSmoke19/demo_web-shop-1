@@ -3,42 +3,59 @@ import { useNavigate } from "react-router-dom";
 import './styles/admin/create.css';
 
 const Create = () => {
-    const [image,setImage] = useState("");
+    const [image,setImage] = useState(null);
     const [name,setName] = useState("");
     const [type,setType] = useState("");
     const [price,setPrice] = useState(0);
     const [isPending,setIsPending] = useState(false);
     const history = useNavigate();
     const url = "http://localhost/webshop-apis/adddata.php";
-    const token = localStorage.getItem('createToken');   //"nncfedbjub5945f98vdpojfcbhhygcfdev26948dvjioH%637w7dh5f4fkipkofcvok&fjfiijsduEH82884fgdjffd78dfkojdf596dff";
+    const token = localStorage.getItem('createToken');
+    const fileTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    const fileSize =  5 * 1024 * 1024;
+    const [error,setError] = useState(null);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const item = {name,type,price,image,token};
-        setIsPending(true);
-        console.log(JSON.stringify(item));
-        fetch(url,{
-            method:'POST',
-            headers:{"content-type":"application/json"},
-            body:JSON.stringify(item)
-        }).then(
-            () =>{
-                alert("New Item Added");
-                setIsPending(false);
-                history("/");
-            }
-        );
+        if(name !== "" && type !== "" && price != 0 && image){
+            const item = {name,type,price,image,token};
+            setIsPending(true);
+            console.log(JSON.stringify(item));
+            fetch(url,{
+                method:'POST',
+                headers:{"content-type":"application/json"},
+                body:JSON.stringify(item)
+            }).then(
+                () =>{
+                    alert("New Item Added");
+                    setIsPending(false);
+                    history("/");
+                }
+            );
+        }else{
+            setError("Missing Credentials!!!")
+        }
     }
 
     const handleImage = (event) =>{
         const file = event.target.files[0];
         if(file){
-            const reader = new FileReader();
-            reader.onloadend = () =>{
-                setImage(reader.result);
+            if(file.size <= fileSize && fileTypes.includes(file.type)){
+                const reader = new FileReader();
+                reader.onloadend = () =>{
+                    setImage(reader.result);
+                }
+                reader.readAsDataURL(file);
+                console.log(image);
+            }else{
+                if(!fileTypes.includes(file.type)){
+                    setError("Wrong file type!!");
+                }else{
+                    setError("image must be less than 5mb!!");
+                }
             }
-            reader.readAsDataURL(file);
-            //console.log(image);
+        }else{
+            setError("Error in file upload!!");
         }
     }
     return (
@@ -68,6 +85,7 @@ const Create = () => {
                         <label for="file-input" className="custom-file-label">Choose image</label>
                         <input id="file-input" className="file-input" type="file" onChange={handleImage} accept="image/*"/>
                     </div>
+                    {error && <p style={{color:'red'}}>{error}</p>}
                     {<div><input className="submit-button" type="submit" value={!isPending?"Add Item":"Adding Item ..."} /></div>}
                 </form>
             </div>
