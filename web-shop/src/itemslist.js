@@ -99,7 +99,7 @@ const ItemsList = (props) => {
               {Array.from(items).map((item) => (
                 <div className="item-container" key={item.id}>
                     <div className="thumbnail-container">
-                          <img onMouseMove={(e)=>handleZoomImage(e)} className="thumbnail" src={`data:image/jpeg;base64,${item.image}`}/>
+                          <img onMouseMove={(e)=>handleZoomImage(e)} className="thumbnail" src={`data:image/png;base64,${item.image}`}/>
                           {<button className="like-button" onClick={()=>handleLikeClick(parseInt(item.id))} onMouseEnter={()=>handleMouseEnter(item.id)} onMouseLeave={()=>handleMouseLeave()}>
                               {!likes.includes(parseInt(item.id)) && (!isRed || isKey!==item.id || dislike) && <img src="/images/icons/heart-icon.png" className="like-icon"/>}
                               {!likes.includes(parseInt(item.id)) && !dislike && (isRed && isKey===item.id) && <img src="/images/icons/red-wishlist-icon.png" className="like-icon"/>}

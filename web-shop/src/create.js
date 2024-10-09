@@ -37,8 +37,39 @@ const Create = () => {
         }
     }
 
-    const handleImage = (event) =>{
-        const file = event.target.files[0];
+    const handleImage = (event) => {
+        console.log("started.........");
+        const selectedFile = event.target.files[0];
+
+
+        if (!selectedFile){console.log(selectedFile);return;} 
+
+        setIsPending(true);
+        setError(null);
+
+        const formData = new FormData();
+        formData.append('image_file', selectedFile);
+        formData.append('size', 'auto');
+    
+            fetch('https://api.remove.bg/v1.0/removebg', {
+                method: 'POST',
+                headers: {
+                  'X-Api-Key': 'N8M2xcLWBLzHSk5wBN3QadPY',
+                },
+                body: formData,
+              })
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error('Network response was not ok');
+                }
+                return response.blob();
+              })
+              .then(blob => {
+                const myblob = new Blob([blob], { type: 'image/png' });
+                const file = new File([myblob], 'fetched-image.png', { type: myblob.type });
+                console.log("Image:" + file);
+            
+
         if(file){
             if(file.size <= fileSize && fileTypes.includes(file.type)){
                 const reader = new FileReader();
@@ -47,7 +78,9 @@ const Create = () => {
                 }
                 reader.readAsDataURL(file);
                 console.log(image);
+                setIsPending(false);
             }else{
+                setIsPending(false);
                 if(!fileTypes.includes(file.type)){
                     setError("Wrong file type!!");
                 }else{
@@ -57,7 +90,8 @@ const Create = () => {
         }else{
             setError("Error in file upload!!");
         }
-    }
+    });
+    };
     return (
         <div className="create">
             <h2 className="title" style={{color:"black"}}>Add New Item</h2>

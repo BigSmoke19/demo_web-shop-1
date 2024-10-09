@@ -18,9 +18,42 @@ const Edit = () => {
     const fileTypes = ['image/jpeg', 'image/png', 'image/gif'];
     const fileSize =  5 * 1024 * 1024;
     const [error,setError] = useState(null);
+    const [prefix,setPrefix] = useState("data:image/png;base64,");
 
-    const handleImage = async (event) =>{
-        let file = event.target.files[0];
+
+    const handleImage = (event) => {
+        console.log("started.........");
+        const selectedFile = event.target.files[0];
+
+
+        if (!selectedFile){console.log(selectedFile);return;} 
+
+        setIsPending(true);
+        setError(null);
+
+        const formData = new FormData();
+        formData.append('image_file', selectedFile);
+        formData.append('size', 'auto');
+    
+            fetch('https://api.remove.bg/v1.0/removebg', {
+                method: 'POST',
+                headers: {
+                  'X-Api-Key': 'N8M2xcLWBLzHSk5wBN3QadPY',
+                },
+                body: formData,
+              })
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error('Network response was not ok');
+                }
+                return response.blob();
+              })
+              .then(blob => {
+                const myblob = new Blob([blob], { type: 'image/png' });
+                const file = new File([myblob], 'fetched-image.png', { type: myblob.type });
+                console.log("Image:" + file);
+            
+
         if(file){
             if(file.size <= fileSize && fileTypes.includes(file.type)){
                 const reader = new FileReader();
@@ -29,7 +62,10 @@ const Edit = () => {
                 }
                 reader.readAsDataURL(file);
                 console.log(image);
+                setIsPending(false);
+                setPrefix("");
             }else{
+                setIsPending(false);
                 if(!fileTypes.includes(file.type)){
                     setError("Wrong file type!!");
                 }else{
@@ -39,6 +75,7 @@ const Edit = () => {
         }else{
             setError("Error in file upload!!");
         }
+    });
     };
 
     const handleSave = () => {
@@ -84,10 +121,10 @@ const Edit = () => {
     return ( 
         <div className="edit-item-container" key={item.id}>
             <div className="thumbnail-container">
-               <img  className="thumbnail" src={image}/>
+               <img  className="thumbnail" src={`${prefix}${image}`}/>
                <label for="file-input" className="custom-file-label">Choose image</label>
                 <input  id="file-input" className="file-input" 
-                    type="file" onChange={handleImage} accept="image/*" /> 
+                    type="file" onChange={(e)=>handleImage(e)} accept="image/*" /> 
             </div>
 
             <div style={{border:"2px black solid"}}>
@@ -96,7 +133,7 @@ const Edit = () => {
                 <input type='text' className="type"
                     value={type} onChange={(e)=>setType(e.target.value)}/>
                 <input type='text' className="price"
-                    value={price}$ onChange={(e)=>setPrice(e.target.value)}/>
+                    value={price} onChange={(e)=>setPrice(e.target.value)}/>$
             </div>
             <button className={"add-to-cart"} onClick={handleSave}>Save</button>
             <button style={{backgroundColor:"red"}} className={"add-to-cart"} onClick={handleDelete}>Delete</button>
