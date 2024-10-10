@@ -10,6 +10,7 @@ import ProtectedRoute from './ProtectedRoute';
 import VerifyEmail from './verifyemail';
 import Edit from './edit';
 import { DataProvider } from './context';
+import Test from './test';
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/verifyemail" element={<VerifyEmail />} />
             <Route path="/edit" element={<Edit />} />
+            <Route path="/test" element={<Test />} />
           </Routes>
         </div>
       </div>

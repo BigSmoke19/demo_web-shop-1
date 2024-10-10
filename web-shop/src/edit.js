@@ -61,7 +61,6 @@ const Edit = () => {
                     setImage(reader.result);
                 }
                 reader.readAsDataURL(file);
-                console.log(image);
                 setIsPending(false);
                 setPrefix("");
             }else{
@@ -79,6 +78,7 @@ const Edit = () => {
     };
 
     const handleSave = () => {
+        console.log(image);
         if(name !== "" && type !== "" && price != 0 && image){
             const newitem = {id,name,type,price,image,token};
             setIsPending(true);

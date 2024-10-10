@@ -14,6 +14,7 @@
     width: 100%;
     background-color:rgb(236, 236, 236);
     transition: background-color 1s ease, box-shadow 1s ease;
+    border: 1px black solid;
 }
 
 .item-container:hover {
@@ -32,6 +33,7 @@
 
 .thumbnail-container {
     height: 70%;
+    background-color: #cccaca;
     position: relative;
     overflow: hidden;
 }
