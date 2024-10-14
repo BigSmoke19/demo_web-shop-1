@@ -14,7 +14,7 @@ update admin page for deleting adding and editing items ✔  **
 solve apis security issues ✔                               **
 manage serach bar and category filtering ✔                 **
 optional : enhance serach algorithm                         ^
-optional : change token auth                                ^
+change localStorage data saving to a more secured one       *
 test website for vulnerbilities                             *
 clean code                                                  *                                       
 deploy the database online                                  *

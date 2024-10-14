@@ -9,7 +9,7 @@ const Home = () => {
     const url = "http://localhost/webshop-apis/getdata.php";
     const isHome = true;
     const {items : data,isPending,error} = (useFetch(url));
-    const [{search,setSearch},{items, setItems}] = useContext(DataContext);
+    const [{search,setSearch},{items, setItems},{recomendations,setRecomendations}] = useContext(DataContext);
     const [change,setChange] = useState(false);
     
     
@@ -19,8 +19,16 @@ const Home = () => {
         setChange(true);
       }else{
         setItems(data);
+        setRecomendations(null);
       }
     },[search]);
+    useEffect(()=>{
+      if(items !== data){
+        setRecomendations(items.map(
+          (item)=>item
+        ));
+      }
+    },[items]);
 
     if(data !== null){
       if(change === true){
@@ -30,6 +38,7 @@ const Home = () => {
         ));
         setChange(false);
       }
+      console.log(recomendations);
     }
     
     return ( 
