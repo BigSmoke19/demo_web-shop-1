@@ -1,5 +1,5 @@
 import './styles/home/header.css';
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { DataContext } from './context';
 
@@ -14,7 +14,6 @@ const Header = () => {
     }
 
     const [{search,setSearch},{items, setItems},{recomendations,setRecomendations}] = useContext(DataContext);
-    
 
     /*const handleLogOut = () =>{
         removeCookie('email',{path: '/'});
@@ -32,7 +31,7 @@ const Header = () => {
     }
     
     const handleSearch = (s) =>{
-        setSearch(s);
+        setSearch(s.trim());
     }
 
     const handleWebShop = ()=>{
@@ -44,10 +43,7 @@ const Header = () => {
         const keywordIndex = word.indexOf(keyword);
         
         if (keywordIndex === -1) {
-          return {
-            wordLeft: '',
-            wordRight: ''
-          };
+          return ['',''];
         }
       
         const wordLeft = word.substring(0, keywordIndex);
@@ -87,14 +83,19 @@ const Header = () => {
             {recomendations &&
              <div className="search-recomendation">
                 {recomendations.map((rec)=>{
+
                     const [w1,w2] = extractPhrases(rec.name,search);
 
-                    return (<div className='recomendation'>
-                        <span>{w1}</span><span className="search-phrase">{search}</span><span>{w2}</span> 
+                    return (
+                    <div className='recomendation'>
+                        <span>{w1}</span><span className="search-phrase">{search}</span><span>{w2}</span>
                         &nbsp; {rec.type} - {rec.price}$
-                        </div>)
-                    })}
-                </div>}
+                    </div>
+                        )
+                    })
+                }
+             </div>
+            }
 
 
             <div className="right-section">
