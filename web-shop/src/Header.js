@@ -2,9 +2,13 @@ import './styles/home/header.css';
 import React, {useContext} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { DataContext } from './context';
+import WishList from './WishList.js'
+import {useState} from 'react'
 
-const Header = () => {
+const Header = (props) => {
+    console.log("items:"+props.items)
     const [isMenu,setIsMenu]=React.useState(false);
+    const [onWishList,setOnWishList]= useState(false);
     //const [cookies,setCookies,removeCookie] = useCookies(['email']);
     const [isUserHover,setIsUserHover]=React.useState(false);
     const history = useNavigate();
@@ -84,8 +88,9 @@ const Header = () => {
                     </Link>
                 </div>
 
-                <button className="right-section-buttons">
+                <button className="right-section-buttons" onClick={()=>setOnWishList(!onWishList)} >
                     <img src="/images/icons/heart-icon.png" alt="" className="heart-icon" />
+                    <WishList items={props.items} onWishList={onWishList} setOnWishList={()=>setOnWishList}/>
                 </button>
                 <Link to='Cart'>
                 <button className="right-section-buttons">

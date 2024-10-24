@@ -1,6 +1,7 @@
 import React from "react";
 import './styles/home/listItems.css';
 import { useNavigate } from "react-router-dom";
+
 const ItemsList = (props) => {
 
     const items = props.items;
@@ -8,12 +9,16 @@ const ItemsList = (props) => {
     const url = "http://localhost:8000/items/";
     const [isRed,setIsRed]=React.useState(false);
     const [isKey,setIsKey]=React.useState(null);
-    const [likes,setLikes]=React.useState([]);
-    const [dislike,setDisLike]=React.useState(false)
     const [isAdded,setIsAdded]=React.useState(false)
     const isHome = props.isHome;
     const history = useNavigate();
     let isAdmin = false;
+    let [likes,setLikes]=React.useState([]);
+    let [dislike,setDisLike]=React.useState(false)
+
+    localStorage.setItem('likes',likes)
+    console.log(localStorage.getItem('likes'))
+
     if(localStorage.getItem('isadmin') === "1"){
         isAdmin = true;
     }  
@@ -29,17 +34,6 @@ const ItemsList = (props) => {
       setDisLike(false)
     }
 
-    function handleLikeClick(id) {
-        if(likes.includes(id)) {
-          setLikes(likes.filter((like)=>like!==id))
-          setDisLike(true);
-        } else{
-            setLikes([
-              ...likes,
-              id
-            ]);
-          }
-    }
     const handleCart = (e,item) =>{
       if(JSON.parse(localStorage.getItem('items')) !== null) {
           const add=e.target.value
@@ -51,7 +45,6 @@ const ItemsList = (props) => {
             JSON.parse(localStorage.getItem('items')).forEach(item=>{
               total+=item.price;
             })
-            console.log(total);
             localStorage.setItem('total',total);
             localStorage.setItem('quantity',JSON.parse(localStorage.getItem('items')).length);
           }
@@ -76,6 +69,18 @@ const ItemsList = (props) => {
       return checked
     }
 
+    function handleLikeClick(id) {
+      if(likes.includes(id)) {
+        setLikes(likes.filter((like)=>like!==id))
+        setDisLike(true);
+      } else{
+          setLikes([
+            ...likes,
+            id
+          ]);
+        }
+    }
+    
     const handleZoomImage = (e) => {
         const rect = e.currentTarget.getBoundingClientRect();
         const x = e.clientX - rect.left; // X coordinate of the cursor in the container

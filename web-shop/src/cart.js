@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import React from 'react'
 import './styles/cart/cart.css';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from "react-router-dom";
@@ -14,6 +15,7 @@ const Cart = () => {
     const history = useNavigate();
     const token = localStorage.getItem('orderToken');
 
+    console.log("cart items:"+items)
 
     useEffect(()=>{
         localStorage.setItem('items',JSON.stringify(items));
@@ -24,7 +26,6 @@ const Cart = () => {
             }
         );
         setTotal(newTotal);
-
     },[items]);
 
 
@@ -74,7 +75,7 @@ const Cart = () => {
     }
     return (
         <div> 
-            <Header />
+            <Header items={localStorage.getItem('products')}/>
             <Categories />
             <div className="cart">
                 <div className="items-container">

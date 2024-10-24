@@ -4,6 +4,7 @@ import Header from './Header.js'
 import Categories from './categories.js';
 import { useEffect, useState, useContext} from 'react';
 import { DataContext } from './context.js';
+import React from 'react';
 
 const Home = () => {
     const url = "http://localhost/webshop-apis/getdata.php";
@@ -11,9 +12,8 @@ const Home = () => {
     const {items : data,isPending,error} = (useFetch(url));
     const [{search,setSearch},{items, setItems}] = useContext(DataContext);
     const [change,setChange] = useState(false);
-    
-    
-    useEffect(()=>{setItems(data)},[data]);
+
+    useEffect(()=>{setItems(data);localStorage.setItem('products',data)},[data]);
     useEffect(()=>{
       if(search != null && search !== ""){
         setChange(true);
@@ -31,10 +31,9 @@ const Home = () => {
         setChange(false);
       }
     }
-    
     return ( 
         <div>
-          <Header />
+          {items && <Header items={items}/>}
           <Categories />
           <div>
             {error && <div>{error}</div>}     
