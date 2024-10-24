@@ -67,6 +67,10 @@
     z-index: 1;
 }
 
+.like-button:hover{
+    border: 1px solid red;
+}
+
 .type,
 .item-name {
     font-size: 20px;

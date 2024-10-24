@@ -1,38 +1,47 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import './styles/home/listItems.css';
 import { useNavigate } from "react-router-dom";
 
 const ItemsList = (props) => {
 
-    const items = props.items;
-    const title = props.title;
-    const url = "http://localhost:8000/items/";
+    const [likes,setLikes]=React.useState(
+      (localStorage.getItem('likes'))?JSON.parse(localStorage.getItem('likes')):[]
+    );
+
+    const [items,setItems] = useState(props.
+    items.map((item)=>{
+        return {...item,isWishListed: (likes.includes(parseInt(item.id)))?true:false};
+      }));
+    // console.log(JSON.stringify(items[0]));
+
     const [isRed,setIsRed]=React.useState(false);
     const [isKey,setIsKey]=React.useState(null);
     const [isAdded,setIsAdded]=React.useState(false)
     const isHome = props.isHome;
     const history = useNavigate();
     let isAdmin = false;
-    let [likes,setLikes]=React.useState([]);
-    let [dislike,setDisLike]=React.useState(false)
 
-    localStorage.setItem('likes',likes)
-    console.log(localStorage.getItem('likes'))
+    useEffect(()=>{
+      localStorage.setItem('likes',JSON.stringify(likes));
+    },[likes])
+
+    console.log(likes);
+    let [dislike,setDisLike]=React.useState(false)
 
     if(localStorage.getItem('isadmin') === "1"){
         isAdmin = true;
-    }  
+    };  
 
     function handleMouseEnter(id) {
-      setIsKey(id)
-      setIsRed(true)
-    }
+      setIsKey(id);
+      setIsRed(true);
+    };
 
     function handleMouseLeave() {
-      setIsKey(null)
-      setIsRed(false)
-      setDisLike(false)
-    }
+      setIsKey(null);
+      setIsRed(false);
+      setDisLike(false);
+    };
 
     const handleCart = (e,item) =>{
       if(JSON.parse(localStorage.getItem('items')) !== null) {
@@ -56,17 +65,17 @@ const ItemsList = (props) => {
     }
 
     function checkIfAdded(item) {
-      let products=JSON.parse(localStorage.getItem('items'))
+      let products=JSON.parse(localStorage.getItem('items'));
       if(products === null) {
-        products=[]
+        products=[];
       }
-      let checked=false
+      let checked=false;
       products.forEach(element => {
         if(element.id === item.id){
-          checked=true
+          checked=true;
         }
       })
-      return checked
+      return checked;
     }
 
     function handleLikeClick(id) {
@@ -79,6 +88,8 @@ const ItemsList = (props) => {
             id
           ]);
         }
+        console.log(likes);
+        localStorage.setItem('likes',likes);
     }
     
     const handleZoomImage = (e) => {
@@ -98,6 +109,21 @@ const ItemsList = (props) => {
       history("/edit");
     }
 
+    const handleLiked = (id) =>{
+
+      const objIndex = items.findIndex(obj => obj.id == id);
+      items[objIndex].isWishListed = !items[objIndex].isWishListed;
+
+      const isWishListed = [];
+      items.map((item)=>{
+        if(item.isWishListed){
+          isWishListed.push(parseInt(item.id));
+        }
+      });
+      setLikes(isWishListed);
+      };
+    // <img src="/images/icons/red-wishlist-icon.png" className="like-icon"/>
+    // <img src="/images/icons/heart-icon.png" className="like-icon"/>
     return ( 
         <div>
           <div className="display-items">
@@ -105,11 +131,12 @@ const ItemsList = (props) => {
                 <div className="item-container" key={item.id}>
                     <div className="thumbnail-container">
                           <img onMouseMove={(e)=>handleZoomImage(e)} className="thumbnail" src={`data:image/png;base64,${item.image}`}/>
-                          {<button className="like-button" onClick={()=>handleLikeClick(parseInt(item.id))} onMouseEnter={()=>handleMouseEnter(item.id)} onMouseLeave={()=>handleMouseLeave()}>
-                              {!likes.includes(parseInt(item.id)) && (!isRed || isKey!==item.id || dislike) && <img src="/images/icons/heart-icon.png" className="like-icon"/>}
-                              {!likes.includes(parseInt(item.id)) && !dislike && (isRed && isKey===item.id) && <img src="/images/icons/red-wishlist-icon.png" className="like-icon"/>}
-                              {likes.includes(parseInt(item.id)) && <img src="/images/icons/red-wishlist-icon.png" className="like-icon"/>}
-                          </button>}
+                          {<button className="like-button" onClick={()=>handleLiked(item.id)}>
+                          {(!item.isWishListed)?
+                          <img src="/images/icons/heart-icon.png" className="like-icon"/>:
+                          <img src="/images/icons/red-wishlist-icon.png" className="like-icon"/>
+                          }
+                          </button>}     
                     </div>
 
                     <div className="detail-container">

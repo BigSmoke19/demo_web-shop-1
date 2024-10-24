@@ -2,8 +2,7 @@ import './styles/home/header.css';
 import React, {useContext, useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { DataContext } from './context';
-import WishList from './WishList.js'
-import {useState} from 'react'
+import WishList from './WishList.js';
 
 const Header = (props) => {
     console.log("items:"+props.items)

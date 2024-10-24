@@ -28,7 +28,8 @@ const Categories = () => {
         <nav>
             <div className="left-navbar"></div>
             <div className="categories">
-                {categories && categories.map((cat)=><p className="link" onClick={()=>handleCategory(cat)}>{cat}</p>)}
+                {categories && categories.map((cat)=>
+                <p className="link" onClick={()=>handleCategory(cat)}>{cat}</p>)}
             </div>
             <div className="right-navbar"></div>
         </nav>

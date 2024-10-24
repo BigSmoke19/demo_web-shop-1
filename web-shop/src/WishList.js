@@ -1,5 +1,6 @@
 import './styles/home/WishList.css';
 const WishList = (props) => {
+    const likes = (localStorage.getItem('likes'))?localStorage.getItem('likes'):[]
     return ( 
             <div className={props.onWishList?"wish-list wishlist-open":"wish-list"}>
                 <div className="cancel-wishlist-button">
@@ -9,12 +10,14 @@ const WishList = (props) => {
                 </div>
                 {Array.from(props.items).map((item)=>{
                     return (
-                        <div className="wishlist-items-container">
+                        <div className="wishlist-items-container" key={item.id}>
                             {
-                             localStorage.getItem('likes').includes(item.id)
+                             likes.includes(item.id)
                              &&
                              <div className="wishlist-container">
+                                <p>{item.name} -- {item.type}</p>
                                 <img className="wishlist-thumbnail" src={`data:image/jpeg;base64,${item.image}`}/>
+                                <p>{item.price}$</p>
                              </div>
                             }
                         </div>
