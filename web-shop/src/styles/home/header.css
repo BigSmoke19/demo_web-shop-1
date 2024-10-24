@@ -55,6 +55,7 @@ header {
     padding-right: 40px;
 }
 
+
 .search-bar {
     flex:1;
     border:none;
@@ -71,6 +72,30 @@ header {
     width:0;
 }
 
+.search-recomendation{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    position: absolute;
+    top:49px;
+    left:340px;
+    right:0;
+    z-index: 10;
+    border: 2px black solid;
+    background-color: white;
+    height:auto;
+    width: 325px;
+}
+
+.recomendation{
+    padding: 20px;
+    font-size: 18px;
+    font-family: sans-serif;
+    font-weight: 400;
+    outline: none;
+    color: rgb(41, 40, 40);
+}
+
 .search-button {
     background-color: white;
     border: none;
@@ -79,6 +104,11 @@ header {
     height: 34px;
     margin-left: -4px;
     padding-right: 10px;
+}
+
+.search-phrase{
+    color: black;
+    font-weight: 600;
 }
 
 .search-icon {

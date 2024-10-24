@@ -1,5 +1,5 @@
 import './styles/home/header.css';
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { DataContext } from './context';
 import WishList from './WishList.js'
@@ -17,7 +17,7 @@ const Header = (props) => {
         admin = true;
     }
 
-    const [{search,setSearch},{items, setItems}] = useContext(DataContext);
+    const [{search,setSearch},{items, setItems},{recomendations,setRecomendations}] = useContext(DataContext);
 
     /*const handleLogOut = () =>{
         removeCookie('email',{path: '/'});
@@ -35,13 +35,29 @@ const Header = (props) => {
     }
     
     const handleSearch = (s) =>{
-        setSearch(s);
+        setSearch(s.trim());
     }
 
     const handleWebShop = ()=>{
         history("/");
         window.location.reload();
     }
+
+    function extractPhrases(word, keyword) {
+        const keywordIndex = word.indexOf(keyword);
+        
+        if (keywordIndex === -1) {
+          return ['',''];
+        }
+      
+        const wordLeft = word.substring(0, keywordIndex);
+        const wordRight = word.substring(keywordIndex + keyword.length);
+      
+        return [
+          wordLeft,
+          wordRight
+    ];
+      }
     return(
         <header>
             <div className="left-section" >
@@ -61,12 +77,30 @@ const Header = (props) => {
                 </p>
             </div>
 
+
             <div className="middle-section">
                 <input className="search-bar" onChange={(e)=>handleSearch(e.target.value)} type="text" placeholder="Search for products" />
                 <button className="search-button">
                     <img src="/images/icons/search-icon.png" alt="" className="search-icon" />
                 </button>
             </div>
+            {recomendations &&
+             <div className="search-recomendation">
+                {recomendations.map((rec)=>{
+
+                    const [w1,w2] = extractPhrases(rec.name,search);
+
+                    return (
+                    <div className='recomendation'>
+                        <span>{w1}</span><span className="search-phrase">{search}</span><span>{w2}</span>
+                        &nbsp; {rec.type} - {rec.price}$
+                    </div>
+                        )
+                    })
+                }
+             </div>
+            }
+
 
             <div className="right-section">
                 <button className="white-right-section-buttons">

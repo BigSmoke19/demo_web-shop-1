@@ -12,11 +12,15 @@ manage ordering ✔                                          **
 setup emails for ordering and eamil verification ✔         **
 update admin page for deleting adding and editing items ✔  **
 solve apis security issues ✔                               **
-manage serach bar and category filtering                    *
+manage serach bar and category filtering ✔                 **
+optional : enhance serach algorithm                         ^
+change localStorage data saving to a more secured one       *
 test website for vulnerbilities                             *
 clean code                                                  *                                       
 deploy the database online                                  *
 run multiple tests for whole website                        *
 make necessary updates                                      *
 ------------------------------------------------------------*
-completion level: 70%
+completion level: 80%
+
+
