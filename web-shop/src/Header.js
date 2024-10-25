@@ -4,8 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { DataContext } from './context';
 import WishList from './WishList.js';
 
-const Header = (props) => {
-    console.log("items:"+props.items)
+const Header = () => {
     const [isMenu,setIsMenu]=React.useState(false);
     const [onWishList,setOnWishList]= useState(false);
     //const [cookies,setCookies,removeCookie] = useCookies(['email']);
@@ -39,7 +38,6 @@ const Header = (props) => {
 
     const handleWebShop = ()=>{
         history("/");
-        window.location.reload();
     }
 
     function extractPhrases(word, keyword) {
@@ -57,6 +55,12 @@ const Header = (props) => {
           wordRight
     ];
       }
+
+      const handleSelectedRec = (rec) =>{
+        setItems([rec]);
+        setRecomendations(null);
+      }
+
     return(
         <header>
             <div className="left-section" >
@@ -84,13 +88,13 @@ const Header = (props) => {
                 </button>
             </div>
             {recomendations &&
-             <div className="search-recomendation">
+             <div className="search-recomendation" onClick={(e)=>e.target.hidden = true}>
                 {recomendations.map((rec)=>{
 
                     const [w1,w2] = extractPhrases(rec.name,search);
 
                     return (
-                    <div className='recomendation'>
+                    <div className='recomendation' onClick={(e)=>e.target.hidden = true}>
                         <span>{w1}</span><span className="search-phrase">{search}</span><span>{w2}</span>
                         &nbsp; {rec.type} - {rec.price}$
                     </div>
@@ -123,7 +127,7 @@ const Header = (props) => {
 
                 <button className="right-section-buttons" onClick={()=>setOnWishList(!onWishList)} >
                     <img src="/images/icons/heart-icon.png" alt="" className="heart-icon" />
-                    <WishList items={props.items} onWishList={onWishList} setOnWishList={()=>setOnWishList}/>
+                    <WishList  onWishList={onWishList} setOnWishList={()=>setOnWishList}/>
                 </button>
                 <Link to='Cart'>
                 <button className="right-section-buttons">

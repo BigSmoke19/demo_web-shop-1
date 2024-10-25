@@ -8,14 +8,18 @@ const ItemsList = (props) => {
       (localStorage.getItem('likes'))?JSON.parse(localStorage.getItem('likes')):[]
     );
 
-    const [items,setItems] = useState(props.
+    const likedIds = likes.map((liked)=>{
+      return liked.id;
+    });
+
+    const items = props.
     items.map((item)=>{
-        return {...item,isWishListed: (likes.includes(parseInt(item.id)))?true:false};
-      }));
+        return {...item,isWishListed: (likedIds.includes(item.id))?true:false};
+      });
+      console.log(items.length);
     // console.log(JSON.stringify(items[0]));
 
-    const [isRed,setIsRed]=React.useState(false);
-    const [isKey,setIsKey]=React.useState(null);
+
     const [isAdded,setIsAdded]=React.useState(false)
     const isHome = props.isHome;
     const history = useNavigate();
@@ -26,22 +30,11 @@ const ItemsList = (props) => {
     },[likes])
 
     console.log(likes);
-    let [dislike,setDisLike]=React.useState(false)
+  
 
     if(localStorage.getItem('isadmin') === "1"){
         isAdmin = true;
     };  
-
-    function handleMouseEnter(id) {
-      setIsKey(id);
-      setIsRed(true);
-    };
-
-    function handleMouseLeave() {
-      setIsKey(null);
-      setIsRed(false);
-      setDisLike(false);
-    };
 
     const handleCart = (e,item) =>{
       if(JSON.parse(localStorage.getItem('items')) !== null) {
@@ -77,20 +70,6 @@ const ItemsList = (props) => {
       })
       return checked;
     }
-
-    function handleLikeClick(id) {
-      if(likes.includes(id)) {
-        setLikes(likes.filter((like)=>like!==id))
-        setDisLike(true);
-      } else{
-          setLikes([
-            ...likes,
-            id
-          ]);
-        }
-        console.log(likes);
-        localStorage.setItem('likes',likes);
-    }
     
     const handleZoomImage = (e) => {
         const rect = e.currentTarget.getBoundingClientRect();
@@ -117,7 +96,7 @@ const ItemsList = (props) => {
       const isWishListed = [];
       items.map((item)=>{
         if(item.isWishListed){
-          isWishListed.push(parseInt(item.id));
+          isWishListed.push(item);
         }
       });
       setLikes(isWishListed);

@@ -23,7 +23,7 @@ const Home = () => {
       }
     },[search]);
     useEffect(()=>{
-      if(items !== data){
+      if(items !== data && search !== null && search !== ""){
         setRecomendations(items.map(
           (item)=>item
         ));
@@ -38,11 +38,14 @@ const Home = () => {
         ));
         setChange(false);
       }
+      if(items !== null){
+        console.log(items.length);
+      }
       console.log(recomendations);
     }
     return ( 
         <div>
-          {items && <Header items={items}/>}
+          <Header/>
           <Categories />
           <div>
             {error && <div>{error}</div>}     

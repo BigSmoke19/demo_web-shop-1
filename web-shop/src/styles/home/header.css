@@ -96,6 +96,11 @@ header {
     color: rgb(41, 40, 40);
 }
 
+.recomendation:hover{
+    background-color: rgb(204, 203, 203);
+    cursor: pointer;
+}
+
 .search-button {
     background-color: white;
     border: none;

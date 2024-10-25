@@ -7,7 +7,7 @@ import Header from './Header.js';
 import Categories from './categories.js';
 
 const Cart = () => {
-    const [items,setItems] = useState(JSON.parse(localStorage.getItem('items')));
+    const [items,setItems] = useState((localStorage.getItem('items'))?JSON.parse(localStorage.getItem('items')):[]);
     const [total,setTotal] = useState(0);
     const [cookies] = useCookies(['email']);
     const userEmail = cookies.email;
@@ -75,8 +75,7 @@ const Cart = () => {
     }
     return (
         <div> 
-            <Header items={localStorage.getItem('products')}/>
-            <Categories />
+            <Header />
             <div className="cart">
                 <div className="items-container">
                     <div className="items-title">
