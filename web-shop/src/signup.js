@@ -1,8 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { VerifyContext } from "./verifycontext";
 
 
 const SignUp = () => {
+
+    const [{name : userName,setName : setUserName},
+        {email : userEmail,setEmail : setUserEmail},
+        {password : userPassword,setPassword : setUserPassword},
+        {code,setCode}] = useContext(VerifyContext);
+
     const [name,setName] = useState(null);
     const [email,setEmail] = useState(null);
     const [password,setPassword] = useState(null);
@@ -38,11 +45,14 @@ const SignUp = () => {
                 })
                 .then(data => {
                     console.log(data);
+
                     setIsPending(false);
-                    localStorage.setItem('name',name);
-                    localStorage.setItem('sEmail',email);
-                    localStorage.setItem('password',password);
-                    localStorage.setItem('code',parseInt(data));
+
+                    setUserName(name);
+                    setUserEmail(email);
+                    setUserPassword(password);
+                    setCode(parseInt(data));
+                    
                     history('/verifyemail');
                 });
         }

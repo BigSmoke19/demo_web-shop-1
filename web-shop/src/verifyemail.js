@@ -1,20 +1,26 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate} from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { VerifyContext } from "./verifycontext";
+import { UserContext } from "./usercontext";
 
 const VerifyEmail = () => {
     const [number,setNumber] = useState(null);
     const [error,setError] = useState("");
     const [count,setCount] = useState(3);
+
     const history = useNavigate();
-    const code = parseInt(localStorage.getItem('code'));
+
     const url = "http://localhost/webshop-apis/adduser.php";
     const [ispending,setIsPending] = useState(false);
-    const name = localStorage.getItem('name');
-    const email = localStorage.getItem('sEmail');
-    const password = localStorage.getItem('password');
+
     const [cookies,setCookies,removeCookies] = useCookies(['email']);
-    const token = "fieuifvhwou84gfhvoh347tyfjrgfvi7g47fglifvula74cv4gfvliagf47g4fvhlqi7gf47fvifgrfgtfgigfewweiokug7sheoif8tgb93e73hpij9sd7wj0if";
+
+    const [{name,setName},{email,setEmail},{password,setPassword},{code,setCode}] = useContext(VerifyContext);
+    const token = process.env.SIGN_UP_TOKEN;
+
+    const [{useremail,setUserEmail},
+        {isadmin,setIsAdmin}] = useContext(UserContext);
 
     const handleChange = (value) => {
         setNumber(value);
@@ -32,9 +38,18 @@ const VerifyEmail = () => {
                 method:'POST',
                 headers:{"content-type":"application/json"},
                 body:JSON.stringify(user)
-            }).then(
-                () =>{
-                    setCookies('email',email,{path: '/'});
+            })
+            .then(res => {
+                if(!res.ok){
+                    throw Error("Faild");
+                }
+                return res.text() 
+            })
+            .then(
+                (data) =>{
+
+                    setUserEmail(email);
+                    setCookies('email',email,{path: '/',expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000)});
                     alert("Signed Up!");
                     setIsPending(false);
                     history("/");

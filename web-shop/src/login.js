@@ -1,8 +1,13 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect, useContext} from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate,Link } from "react-router-dom";
+import { UserContext } from "./usercontext";
 
 const LogIn = () => {
+
+    const [{useremail,setUserEmail},{isadmin,setIsAdmin}] = useContext(UserContext);
+
+
     const [user,setUser] = useState(null);
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
@@ -30,14 +35,16 @@ const LogIn = () => {
     const checkUser = () =>{
         if(parseInt(user.email) === 1){
             if(parseInt(user.password) === 1){
-                setCookies('email',email,{path: '/'});
-                console.log(cookies);
-                localStorage.setItem('email',email);
-                localStorage.setItem('isadmin',user.isadmin);
+                setCookies('email',email,{path: '/',expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000)});
+
+                setUserEmail(email);
+                setIsAdmin(user.isadmin);
+
                 setPending(false);
-                localStorage.setItem('orderToken',user.ordertoken);
+
                 if(parseInt(user.isadmin) === 1){
-                    localStorage.setItem('createToken',user.token);
+
+
                     alert("Hello admin");
                     history("/create");  
                 }else{

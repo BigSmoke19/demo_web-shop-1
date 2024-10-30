@@ -10,7 +10,7 @@ const Create = () => {
     const [isPending,setIsPending] = useState(false);
     const history = useNavigate();
     const url = "http://localhost/webshop-apis/adddata.php";
-    const token = localStorage.getItem('createToken');
+    const token = process.env.CREATE_TOKEN;
     const fileTypes = ['image/jpeg', 'image/png', 'image/gif'];
     const fileSize =  5 * 1024 * 1024;
     const [error,setError] = useState(null);

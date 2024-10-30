@@ -13,7 +13,7 @@ const Home = () => {
     const [{search,setSearch},{items, setItems},{recomendations,setRecomendations}] = useContext(DataContext);
     const [change,setChange] = useState(false);
 
-    useEffect(()=>{setItems(data);localStorage.setItem('products',data)},[data]);
+    useEffect(()=>{setItems(data)},[data]);
     useEffect(()=>{
       if(search != null && search !== ""){
         setChange(true);

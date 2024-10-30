@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
+import { UserContext } from './usercontext';
 
 const ProtectedRoute = ({ children }) => {
-    let isAdmin = false;
-    if(localStorage.getItem('isadmin') === "1"){
-        isAdmin = true;
-    }  
-  if (!isAdmin) {
+  const [{useremail,setUserEmail},{isadmin,setIsAdmin}] = useContext(UserContext);
+
+  if (!isadmin) {
     return <Navigate to="/" replace />;
   }
 

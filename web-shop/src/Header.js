@@ -2,7 +2,9 @@ import './styles/home/header.css';
 import React, {useContext, useState} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { DataContext } from './context';
-import WishList from './WishList.js';
+import WishList from './wishlist.js';
+import { UserContext } from './usercontext.js';
+import { useCookies } from 'react-cookie';
 
 const Header = () => {
     const [isMenu,setIsMenu]=React.useState(false);
@@ -10,16 +12,13 @@ const Header = () => {
     //const [cookies,setCookies,removeCookie] = useCookies(['email']);
     const [isUserHover,setIsUserHover]=React.useState(false);
     const history = useNavigate();
-    let admin = false;
-    if(localStorage.getItem('isadmin') === "1"){
-        admin = true;
-    }
+
+    const [{useremail,setUserEmail},{isadmin,setIsAdmin}] = useContext(UserContext);
 
     const [{search,setSearch},{items, setItems},{recomendations,setRecomendations}] = useContext(DataContext);
 
-    /*const handleLogOut = () =>{
-        removeCookie('email',{path: '/'});
-    }*/
+    const [cookie,setCookie,removeCookie] = useCookies("email");
+
    function handleUserEnter() {
         setIsUserHover(true)
    }
@@ -59,6 +58,11 @@ const Header = () => {
       const handleSelectedRec = (rec) =>{
         setItems([rec]);
         setRecomendations(null);
+      }
+
+      const handleLogout = () =>{
+        removeCookie('email',{path: '/'});
+        window.location.reload();
       }
 
     return(
@@ -120,21 +124,24 @@ const Header = () => {
                     <Link to="/login">
                         Sign In
                     </Link>
-                    <Link to="/signup">
+                    <Link to="/login/signup">
                         Sign Up
                     </Link>
+                   { cookie.email && <Link onClick={handleLogout}>
+                        Log Out
+                    </Link>}
                 </div>
 
                 <button className="right-section-buttons" onClick={()=>setOnWishList(!onWishList)} >
                     <img src="/images/icons/heart-icon.png" alt="" className="heart-icon" />
                     <WishList  onWishList={onWishList} setOnWishList={()=>setOnWishList}/>
                 </button>
-                <Link to='Cart'>
+                <Link to='/cart'>
                 <button className="right-section-buttons">
                     <img src="/images/icons/cart-icon.png" alt="" className="cart-icon" />
                 </button>
                 </Link>
-                {admin &&
+                {isadmin &&
                 <Link to='Create'>
                 <button id="log-out">
                     Admin

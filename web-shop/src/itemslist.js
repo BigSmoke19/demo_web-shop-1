@@ -1,6 +1,7 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect,useContext} from "react";
 import './styles/home/listItems.css';
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "./usercontext";
 
 const ItemsList = (props) => {
 
@@ -23,7 +24,8 @@ const ItemsList = (props) => {
     const [isAdded,setIsAdded]=React.useState(false)
     const isHome = props.isHome;
     const history = useNavigate();
-    let isAdmin = false;
+
+    const [{useremail,setUserEmail},{isadmin,setIsAdmin}] = useContext(UserContext);
 
     useEffect(()=>{
       localStorage.setItem('likes',JSON.stringify(likes));
@@ -32,14 +34,10 @@ const ItemsList = (props) => {
     console.log(likes);
   
 
-    if(localStorage.getItem('isadmin') === "1"){
-        isAdmin = true;
-    };  
-
     const handleCart = (e,item) =>{
       if(JSON.parse(localStorage.getItem('items')) !== null) {
-          const add=e.target.value
-          let total=0
+          const add=e.target.value;
+          let total=0;
           if(add === "Add To Cart") {
             const cart = JSON.parse(localStorage.getItem('items'));
             cart.push({...item,"quantity":1});
@@ -103,6 +101,7 @@ const ItemsList = (props) => {
       };
     // <img src="/images/icons/red-wishlist-icon.png" className="like-icon"/>
     // <img src="/images/icons/heart-icon.png" className="like-icon"/>
+    console.log(useremail)
     return ( 
         <div>
           <div className="display-items">
@@ -132,7 +131,7 @@ const ItemsList = (props) => {
                             onClick={(e)=>handleCart(e,item)}>
                             {checkIfAdded(item)?"Added":"Add To Cart"}
                           </button>}
-                          {isAdmin && <button className={"add-to-cart"} onClick={()=>handleEdit(item)}>Edit</button>}
+                          {isadmin && <button className={"add-to-cart"} onClick={()=>handleEdit(item)}>Edit</button>}
                     </div>
                 </div>
               ))}

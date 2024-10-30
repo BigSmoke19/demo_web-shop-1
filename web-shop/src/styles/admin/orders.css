@@ -1,0 +1,55 @@
+.orders{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 2px solid black;
+}
+
+.order{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 90%;
+    height: auto;
+    margin: 10px;
+    border: 2px solid rgb(61, 57, 57);
+    border-radius: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.orderemail{
+    font-weight: 600;
+    color: brown;
+}
+
+.orderitems{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Creates 2 columns */
+    gap: 10px; 
+    
+}
+
+.orderdata{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 1px solid rgb(97, 97, 141);
+    border-radius: 30px;
+}
+
+.orderthumbnail{
+    width: 80px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.orderinfo{
+
+}
+
+.ordertotal{
+    color: rgb(42, 165, 52);
+}

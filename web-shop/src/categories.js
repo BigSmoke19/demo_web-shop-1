@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import './styles/home/navbar.css'
 import { useCookies } from 'react-cookie';
 import { DataContext } from "./context";

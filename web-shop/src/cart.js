@@ -1,21 +1,27 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import React from 'react'
 import './styles/cart/cart.css';
 import { useCookies } from 'react-cookie';
 import { useNavigate } from "react-router-dom";
 import Header from './Header.js';
-import Categories from './categories.js';
+import { UserContext } from './usercontext.js';
 
 const Cart = () => {
     const [items,setItems] = useState((localStorage.getItem('items'))?JSON.parse(localStorage.getItem('items')):[]);
     const [total,setTotal] = useState(0);
     const [cookies] = useCookies(['email']);
-    const userEmail = cookies.email;
+
+    const [{useremail : userEmail,setUserEmail},
+        {isadmin,setIsAdmin}] = useContext(UserContext);
+
+    const token = process.env.ORDER_TOKEN;
+
     const url = "http://localhost/webshop-apis/addorder.php";
     const history = useNavigate();
-    const token = localStorage.getItem('orderToken');
+    
+    const [isPending,setIsPending] = useState(false);
+    const [error,setError] = useState(null);
 
-    console.log("cart items:"+items)
 
     useEffect(()=>{
         localStorage.setItem('items',JSON.stringify(items));
@@ -34,7 +40,6 @@ const Cart = () => {
     }
 
     const handeleQuantity = (sign,id) =>{
-        console.log(sign);
         if(sign === "+"){
             const newItems = items.map(
                 (item) =>{
@@ -60,16 +65,28 @@ const Cart = () => {
     }
 
     const handleCheckout = () =>{
-        if(total !== 0 && userEmail != null){
+        if(userEmail === null){
+            setIsPending(false);
+            setError("please sign in");
+            history("/signin")
+        }
+        else if(total !== 0){
+            setIsPending(true);
+            const data = JSON.parse(JSON.stringify(items));
             fetch(url,{
                 method:'POST',
                 headers:{"content-type":"application/json"},
-                body:JSON.stringify({"data":items,"useremail":userEmail,"total":total,"token":token})
+                body:JSON.stringify({"data":data,"useremail":userEmail,"total":total,"token":token})
             }).then(
                 () =>{
+                    setIsPending(false);
                     alert("order marked!");
                     history("/");
                 }
+            ).catch(err=>{
+                setError(err.message);
+                setIsPending(false);
+            }
             );        
         }
     }
@@ -120,8 +137,9 @@ const Cart = () => {
                         <p>{total}$</p>
                     </div>
                     <div className='cart-totals'>
-                        <button className="checkout" onClick={handleCheckout}>Checkout</button>
+                        <button className="checkout" disabled={isPending} onClick={handleCheckout}>Checkout</button>
                     </div>
+                    {error && <div>{error}</div>}
                 </div>
             </div>
         </div>

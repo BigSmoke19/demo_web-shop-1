@@ -12,9 +12,12 @@ manage ordering ✔                                          **
 setup emails for ordering and eamil verification ✔         **
 update admin page for deleting adding and editing items ✔  **
 solve apis security issues ✔                               **
-manage serach bar and category filtering ✔                 **
-optional : enhance serach algorithm                         ^
-change localStorage data saving to a more secured one       *
+manage serach bar and category filtering ✔                 **                    
+add orders page  ✔                                         **
+enhance login && sign up  ✔                                **
+** change localStorage data saving to a more secured one ✔ **
+** add sales home page                                      *
+-------------------------------------------------------------
 test website for vulnerbilities                             *
 clean code                                                  *                                       
 deploy the database online                                  *
@@ -22,5 +25,6 @@ run multiple tests for whole website                        *
 make necessary updates                                      *
 ------------------------------------------------------------*
 completion level: 80%
+
 
 
