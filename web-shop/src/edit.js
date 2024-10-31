@@ -14,7 +14,8 @@ const Edit = () => {
     const history = useNavigate();
     const url = "http://localhost/webshop-apis/edit.php";
     const url2 = "http://localhost/webshop-apis/delete.php";
-    const token = process.env.CREATE_TOKEN;
+    const token = process.env.REACT_APP_CREATE_TOKEN;
+    console.log(token);
     const fileTypes = ['image/jpeg', 'image/png', 'image/gif'];
     const fileSize =  5 * 1024 * 1024;
     const [error,setError] = useState(null);
@@ -87,9 +88,15 @@ const Edit = () => {
                 method:'POST',
                 headers:{"content-type":"application/json"},
                 body:JSON.stringify(newitem)
-            }).then(
-                () =>{
-                    alert("Edit Saved!!");
+            }).then(res => {
+                if(!res.ok){
+                    throw Error("Faild");
+                }
+                return res.text() // extract json data from response
+            })
+            .then(
+                (text) =>{
+                    alert(text);
                     setIsPending(false);
                     history("/");
                 }

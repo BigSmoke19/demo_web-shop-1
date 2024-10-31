@@ -14,7 +14,7 @@ const Cart = () => {
     const [{useremail : userEmail,setUserEmail},
         {isadmin,setIsAdmin}] = useContext(UserContext);
 
-    const token = process.env.ORDER_TOKEN;
+    const token = process.env.REACT_APP_ORDER_TOKEN;
 
     const url = "http://localhost/webshop-apis/addorder.php";
     const history = useNavigate();

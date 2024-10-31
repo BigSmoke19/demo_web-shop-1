@@ -11,6 +11,7 @@ import Edit from './edit';
 import { DataProvider } from './context';
 import { UserDataProvider } from './usercontext';
 import { VerifyDataProvider } from './verifycontext';
+import { WishListDataProvider } from './wishlistcontext';
 import Orders from './orders';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
     <DataProvider>
     <UserDataProvider>
     <VerifyDataProvider>
+    <WishListDataProvider>
     <Router>
       <div className="App">
         <div className="content">
@@ -57,6 +59,7 @@ function App() {
         </div>
       </div>
     </Router>
+    </WishListDataProvider>
     </ VerifyDataProvider>
     </ UserDataProvider>
     </DataProvider>

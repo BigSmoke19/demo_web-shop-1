@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './styles/home/WishList.css';
+import { WishListContext } from './wishlistcontext';
 const WishList = (props) => {
 
-    const [items,setItems] = useState((localStorage.getItem('likes'))?JSON.parse(localStorage.getItem('likes')):[]);
+    //const [items,setItems] = useState((localStorage.getItem('likes'))?JSON.parse(localStorage.getItem('likes')):[{id:0,name:"empty",type:"",image:"",price:0}]);
 
-   /* useEffect(()=>{
-        setItems((localStorage.getItem('likes'))?JSON.parse(localStorage.getItem('likes')):[])
-    },[items])*/
+    const [{items,setItems}] = useContext(WishListContext);
 
     return ( 
             <div className={props.onWishList?"wish-list wishlist-open":"wish-list"}>
@@ -15,17 +14,18 @@ const WishList = (props) => {
                         <p style={{color:"white",fontSize:20,margin:0}}>x</p>
                     </button>
                 </div>
+                <div className="wishlist-items-container" >
                 {Array.from(items).map((item)=>{
                     return (
-                        <div className="wishlist-items-container" key={item.id}>
-                             <div className="wishlist-container">
-                                <p>{item.name} -- {item.type}</p>
+                        
+                             <div className="wishlist-container" key={item.id}>
+                                <p className='info'>{item.name} -- {item.type}</p>
                                 <img className="wishlist-thumbnail" src={`data:image/jpeg;base64,${item.image}`}/>
-                                <p>{item.price}$</p>
+                                <p className='info'>{item.price}$</p>
                              </div>
-                        </div>
                     )
                 })}
+                </div>
             </div>
      );
 }

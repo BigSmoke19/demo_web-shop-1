@@ -6,7 +6,7 @@ export const UserContext = createContext();
 export const UserDataProvider = ({ children }) => {
     const [cookies,setCookies] = useCookies(['email']);
     const [useremail,setUserEmail] = useState(cookies.email);
-    const [isadmin,setIsAdmin] = useState(false);
+    const [isadmin,setIsAdmin] = useState(useremail === "mohammadsafieddine789@gmail.com");
 
     return (
         <UserContext.Provider value={[

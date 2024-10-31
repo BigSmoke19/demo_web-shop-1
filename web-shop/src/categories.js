@@ -24,15 +24,11 @@ const Categories = () => {
     }
 
     return (  
-        <nav>
-            <div className="left-navbar"></div>
-            <div className="categories">
-                <p className="link" onClick={()=>setItems(intialItems)}>All</p>
-                {categories && categories.map((cat)=>
-                <p className="link" onClick={()=>handleCategory(cat)}>{cat}</p>)}
-            </div>
-            <div className="right-navbar"></div>
-        </nav>
+        <div className='categories'>
+            <div className="category" onClick={()=>setItems(intialItems)}>All</div>
+            {categories && categories.map((cat)=>
+            <div className="category" onClick={()=>handleCategory(cat)}>{cat}</div>)}
+        </div>
     );
 }
  

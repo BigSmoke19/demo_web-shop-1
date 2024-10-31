@@ -7,7 +7,6 @@ import { UserContext } from './usercontext.js';
 import { useCookies } from 'react-cookie';
 
 const Header = () => {
-    const [isMenu,setIsMenu]=React.useState(false);
     const [onWishList,setOnWishList]= useState(false);
     //const [cookies,setCookies,removeCookie] = useCookies(['email']);
     const [isUserHover,setIsUserHover]=React.useState(false);
@@ -68,17 +67,6 @@ const Header = () => {
     return(
         <header>
             <div className="left-section" >
-                <div className={isMenu?"side-bar open":"side-bar"}>
-                    <Link className="link" to="/">Home</Link>
-                    <Link className="link" to="Create">Create</Link>
-                    <Link className="link" to="SignUp">SignUp</Link>
-                    <button className="cancel-button" onClick={()=>setIsMenu(false)}>
-                        X
-                    </button>
-                </div>
-                <button className="menu-icon-button" alt="" onClick={()=>setIsMenu(true)}>
-                    <img src="/images/icons/menu-icon.png" alt="" className="menu-icon" />
-                </button>
                 <p className="title" onClick={handleWebShop}>
                     Web-Shop
                 </p>
@@ -121,13 +109,13 @@ const Header = () => {
 
                 <div className={!isUserHover?"user-bar":"user-bar open-user-bar"}
                     onMouseEnter={handleUserEnter} onMouseLeave={handleUserLeave} onClick={handleUserClick}>
-                    <Link to="/login">
+                    <Link className='userbaritems' to="/login">
                         Sign In
                     </Link>
-                    <Link to="/login/signup">
+                    <Link className='userbaritems' to="/login/signup">
                         Sign Up
                     </Link>
-                   { cookie.email && <Link onClick={handleLogout}>
+                   { cookie.email && <Link className='userbaritems' onClick={handleLogout}>
                         Log Out
                     </Link>}
                 </div>
