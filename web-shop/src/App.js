@@ -13,6 +13,8 @@ import { UserDataProvider } from './usercontext';
 import { VerifyDataProvider } from './verifycontext';
 import { WishListDataProvider } from './wishlistcontext';
 import Orders from './orders';
+import AddSale from './addsale';
+import Sales from './sales';
 
 function App() {
   return (
@@ -48,13 +50,20 @@ function App() {
                   <Orders />
                 </ProtectedRoute>
               }
+            />\
+            <Route
+            path="/addsale"
+              element={
+                <ProtectedRoute>
+                  <AddSale />
+                </ProtectedRoute>
+              }
             />
             <Route exact path="/create" element={<Create />} />
             <Route path="/login" element={<LogIn />} />
             <Route path="/login/signup" element={<SignUp />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/verifyemail" element={<VerifyEmail />} />
-            <Route path="/edit" element={<Edit />} />
           </Routes>
         </div>
       </div>

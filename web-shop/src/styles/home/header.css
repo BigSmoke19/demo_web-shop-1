@@ -1,9 +1,14 @@
 header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     display:flex;
     justify-content: space-between;
     align-items: center;
     height:60px;
     background-color: rgb(4, 0, 56);
+    z-index: 10;
 }
 
 .left-section {
@@ -145,9 +150,11 @@ header {
     cursor: pointer;
     height:55px;
     border:none;
+    transition: border 0.3s ease-in-out;
 }
 
-.user-icon-button {
+
+.right-section-buttons:hover {
     border-color:white;
     border-width: 2px;
     border-style: solid;
@@ -200,6 +207,42 @@ header {
     text-decoration-color: white;
     transition: text-decoration 0.1s ease-in-out;
 }
+
+
+.admin-user-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    visibility: hidden;
+    overflow: hidden;
+    position: absolute;
+    top:60px;
+    right: 30px;
+    width: 100px;
+    height: 0px;
+    transition: height 0.5s ease-in-out,visibility 0.5s;
+    z-index: 2;
+    background-color: white;
+    border: 1px solid rgb(243, 5, 5);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.admin-user-bar.open-user-bar {
+    visibility: visible;
+    height: 100px;
+    background-color: white;
+    border: 1px solid rgb(4, 0, 56);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
 
 .user-icon,
 .heart-icon,

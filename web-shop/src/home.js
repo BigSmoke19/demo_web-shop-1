@@ -5,9 +5,15 @@ import Categories from './categories.js';
 import { useEffect, useState, useContext} from 'react';
 import { DataContext } from './context.js';
 import React from 'react';
+import Sales from './sales.js';
 
 const Home = () => {
+    const [itemlist,setItemList] = useState(false);
     const url = "http://localhost/webshop-apis/getdata.php";
+
+    const url2 = "http://localhost/webshop-apis/getsales.php"
+    const {items : sales,isPending2,error2} = (useFetch(url2));
+
     const isHome = true;
     const {items : data,isPending,error} = (useFetch(url));
     const [{search,setSearch},{items, setItems},{recomendations,setRecomendations}] = useContext(DataContext);
@@ -43,14 +49,30 @@ const Home = () => {
       }
       console.log(recomendations);
     }
+    
+
+    const handleItemList = (bool)=>{
+      setItemList(bool);
+    }
+
+    const handleSale = (sale) =>{
+      setItems(data.filter((item)=>item.sale.trim() === sale));
+      handleItemList(true);
+  }
+
+
     return ( 
         <div>
-          <Header/>
-          <Categories />
+          <Header  handleItemList={handleItemList} />
+          <Categories handleItemList={handleItemList} />
           <div>
-            {error && <div>{error}</div>}     
-            {isPending && <div>Loading....</div>}
-            {items && <ItemsList items = {items} title = "My Items" isHome={isHome} />}  
+            {error2 && <div>{error}</div>}     
+            {isPending2 && <div>Loading....</div>}
+            
+            {itemlist && items && <ItemsList items = {items} title = "My Items" isHome={isHome} />} 
+            {!itemlist && sales && <Sales handleSale={handleSale} sales={sales} items={items} error={error2}/>}
+            
+           
           </div>
         </div>
      );

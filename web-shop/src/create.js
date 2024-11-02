@@ -6,6 +6,7 @@ const Create = () => {
     const [image,setImage] = useState(null);
     const [name,setName] = useState("");
     const [type,setType] = useState("");
+    const [sale,setSale] = useState("no");
     const [price,setPrice] = useState(0);
     const [isPending,setIsPending] = useState(false);
     const history = useNavigate();
@@ -18,7 +19,7 @@ const Create = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if(name !== "" && type !== "" && price != 0 && image){
-            const item = {name,type,price,image,token};
+            const item = {name,type,price,image,sale,token};
             setIsPending(true);
             console.log(JSON.stringify(item));
             fetch(url,{
@@ -115,7 +116,13 @@ const Create = () => {
                             onChange={(e)=>{setPrice(e.target.value)}}/>
                     </div>
 
-                    <div style={{marginTop:20}}>
+                    <div className="name" style={{marginTop:20}}>
+                        <label className="name-type-label">Sale: </label>
+                        <input className="name-type" type="text" required value={sale}
+                            onChange={(e)=>{setSale(e.target.value)}}/>
+                    </div>
+
+                    <div  style={{marginTop:20}}>
                         <label for="file-input" className="custom-file-label">Choose image</label>
                         <input id="file-input" className="file-input" type="file" onChange={handleImage} accept="image/*"/>
                     </div>

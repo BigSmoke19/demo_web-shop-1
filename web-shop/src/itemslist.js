@@ -1,5 +1,5 @@
 import React, { useState,useEffect,useContext} from "react";
-import './styles/home/listItems.css';
+import  './styles/home/listItems.css';
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "./usercontext";
 import { WishListContext } from "./wishlistcontext";
@@ -20,8 +20,8 @@ const ItemsList = (props) => {
     // console.log(JSON.stringify(items[0]));
 
 
-    const [isAdded,setIsAdded]=React.useState(false)
-    const isHome = props.isHome;
+    const [isAdded,setIsAdded]=React.useState(false);
+
     const history = useNavigate();
 
     const [{useremail,setUserEmail},{isadmin,setIsAdmin}] = useContext(UserContext);
@@ -102,7 +102,7 @@ const ItemsList = (props) => {
     // <img src="/images/icons/heart-icon.png" className="like-icon"/>
     console.log(useremail)
     return ( 
-        <div >
+        <div className="itemlist" >
           
           <div className="display-items">
               {Array.from(items).map((item) => (
@@ -130,7 +130,7 @@ const ItemsList = (props) => {
                           </p>
                       </div>
                         <div className="buttons">
-                        {isHome && <button className={"add-to-cart"} value={checkIfAdded(item)?"Added":"Add To Cart"}
+                        {<button className={"add-to-cart"} value={checkIfAdded(item)?"Added":"Add To Cart"}
                             onClick={(e)=>handleCart(e,item)}>
                             {checkIfAdded(item)?"Added":"Add To Cart"}
                           </button>}

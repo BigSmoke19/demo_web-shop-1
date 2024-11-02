@@ -1,6 +1,6 @@
 import {useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import './styles/home/listItems.css';
+import './styles/admin/edit.css';
 
 const Edit = () => {
 
@@ -10,6 +10,7 @@ const Edit = () => {
     const [type,setType] = useState(item.type);
     const [price,setPrice] = useState(item.price);
     const [image,setImage] = useState(item.image);
+    const [sale,setSale] = useState(item.sale);
     const [ispending,setIsPending] = useState(false);
     const history = useNavigate();
     const url = "http://localhost/webshop-apis/edit.php";
@@ -81,7 +82,7 @@ const Edit = () => {
     const handleSave = () => {
         console.log(image);
         if(name !== "" && type !== "" && price != 0 && image){
-            const newitem = {id,name,type,price,image,token};
+            const newitem = {id,name,type,price,image,sale,token};
             setIsPending(true);
             console.log(JSON.stringify(newitem));
             fetch(url,{
@@ -125,28 +126,36 @@ const Edit = () => {
         }
     };
 
-    return ( 
-        <div className="edit-item-container" key={item.id}>
-            <div className="thumbnail-container">
-               <img  className="thumbnail" src={`${prefix}${image}`}/>
-               <label for="file-input" className="custom-file-label">Choose image</label>
-                <input  id="file-input" className="file-input" 
-                    type="file" onChange={(e)=>handleImage(e)} accept="image/*" /> 
-            </div>
+    return (
+        <div className='container'>
+            <div className="edit-container">
+                <div className="edit-thumbnail-container">
+                <img  className="edit-thumbnail" src={`${prefix}${image}`}/>
+                <label for="edit-file-input" className="custom-file-label">Choose image</label>
+                    <input  id="edit-file-input" className="edit-file-input" 
+                        type="file" onChange={(e)=>handleImage(e)} accept="image/*" /> 
+                </div>
 
-            <div style={{border:"2px black solid"}}>
-                <input type='text' className="item-name"
-                    value={name} onChange={(e)=>setName(e.target.value)}/>
-                <input type='text' className="type"
-                    value={type} onChange={(e)=>setType(e.target.value)}/>
-                <input type='text' className="price"
-                    value={price} onChange={(e)=>setPrice(e.target.value)}/>$
-            </div>
-            <button className={"add-to-cart"} onClick={handleSave}>Save</button>
-            <button style={{backgroundColor:"red"}} className={"add-to-cart"} onClick={handleDelete}>Delete</button>
-            {error && <p style={{color:'red'}}>{error}</p>}
-            {ispending && <p>Saving changes...</p>}
-    </div>
+                <div className='data' >
+                    <input type='text' className="edit-data"
+                        value={name} onChange={(e)=>setName(e.target.value)}/>
+                    <input type='text' className="edit-data"
+                        value={type} onChange={(e)=>setType(e.target.value)}/>
+                    <input type='text' className="edit-data"
+                        value={price} onChange={(e)=>setPrice(e.target.value)}/>
+                    <input type='text' className="edit-data"
+                        value={sale} onChange={(e)=>setSale(e.target.value)}/>
+                </div>
+
+                <div className="edit-buttons">
+                    <button className={"edit-button"} onClick={handleSave}>Save</button>
+                    <button style={{backgroundColor:"red"}} className={"edit-button"} onClick={handleDelete}>Delete</button>
+                </div>
+
+                {error && <p style={{color:'red'}}>{error}</p>}
+                {ispending && <p>Saving changes...</p>}
+        </div>
+    </div>  
      );
 }
 export default Edit;

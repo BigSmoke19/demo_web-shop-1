@@ -94,52 +94,56 @@ const Cart = () => {
         <div> 
             <Header />
             <div className="cart">
-                <div className="items-container">
-                    <div className="items-title">
-                        <div className="items-title-left-section">
-                            <p className="title-names">PRODUCT</p>
-                        </div>
-                        <div className='items-title-right-section'>
-                            <p className="title-names">PRICE</p>
-                            <p className="title-names">QUANTITY</p>
-                            <p className="title-names">SUBTOTAL</p>
-                        </div>
-                    </div>
-                    <div className="products">
-                        {Array.from(items).map((item=>(
-                            <div className="product">
-                                <div className="products-left-section">
-                                    <button className="cancel-button" onClick={()=>handeleDeleteItem(item.id)}>X</button>
-                                    <img src={`data:image/jpeg;base64,${item.image}`} className="product-thumbnail"/>
-                                    <p className={{marginRight:20}}>{item.name}</p>
-                                </div>
-                                <div className="products-right-section">
-                                    <p className="official-price">${item.price}</p>
-                                    <div className="quantity-contianer" style={{paddingRight:"10px"}}>
-                                        <button className="plus-button" onClick={(e)=>handeleQuantity("+",item.id)}>+</button>
-                                        <span style={{marginBottom:15}}> {item.quantity} </span>
-                                        <button className="minus-button" onClick={(e)=>handeleQuantity("-",item.id)}>-</button>
-                                    </div>
-                                    <p style={{color:'LightBlue',fontSize:17,fontWeight:'bold'}}>${item.price * item.quantity}</p>
-                                </div>
+                <div className="left">
+                    <div className="items-container">
+                        <div className="items-title">
+                            <div className="items-title-left-section">
+                                <p className="title-names">PRODUCT</p>
                             </div>
-                        )))}
+                            <div className='items-title-right-section'>
+                                <p className="title-names">PRICE</p>
+                                <p className="title-names">QUANTITY</p>
+                                <p className="title-names">SUBTOTAL</p>
+                            </div>
+                        </div>
+                        <div className="products">
+                            {Array.from(items).map((item=>(
+                                <div className="product">
+                                    <div className="products-left-section">
+                                        <button className="cancel-button" onClick={()=>handeleDeleteItem(item.id)}>X</button>
+                                        <img src={`data:image/jpeg;base64,${item.image}`} className="product-thumbnail"/>
+                                        <p className={{marginRight:20}}>{item.name}</p>
+                                    </div>
+                                    <div className="products-right-section">
+                                        <p className="official-price">${item.price}</p>
+                                        <div className="quantity-contianer" style={{paddingRight:"10px"}}>
+                                            <button className="plus-button" onClick={(e)=>handeleQuantity("+",item.id)}>+</button>
+                                            <span style={{marginBottom:15}}> {item.quantity} </span>
+                                            <button className="minus-button" onClick={(e)=>handeleQuantity("-",item.id)}>-</button>
+                                        </div>
+                                        <p style={{color:'black',fontSize:17,fontWeight:'bold'}}>${item.price * item.quantity}</p>
+                                    </div>
+                                </div>
+                            )))}
+                        </div>
                     </div>
                 </div>
-                <div className="order-summary">
-                    <h1>Cart Totals</h1>
-                    <div className="cart-totals">
-                        <p style={{fontWeight:'bold'}}>SubTotal</p>
-                        <p>{total}$</p>
+                <div className="right">
+                    <div className="order-summary">
+                        <h1>Cart Totals</h1>
+                        <div className="cart-totals">
+                            <p style={{fontWeight:'bold'}}>SubTotal</p>
+                            <p>{total}$</p>
+                        </div>
+                        <div className='cart-totals'>
+                            <p style={{fontWeight:'bold'}}>Total</p>
+                            <p>{total}$</p>
+                        </div>
+                        <div className='cart-totals'>
+                            <button className="checkout" disabled={isPending} onClick={handleCheckout}>Checkout</button>
+                        </div>
+                        {error && <div>{error}</div>}
                     </div>
-                    <div className='cart-totals'>
-                        <p style={{fontWeight:'bold'}}>Total</p>
-                        <p>{total}$</p>
-                    </div>
-                    <div className='cart-totals'>
-                        <button className="checkout" disabled={isPending} onClick={handleCheckout}>Checkout</button>
-                    </div>
-                    {error && <div>{error}</div>}
                 </div>
             </div>
         </div>
