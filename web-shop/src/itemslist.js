@@ -1,4 +1,4 @@
-import React, { useState,useEffect,useContext} from "react";
+import React, {useEffect,useContext} from "react";
 import  './styles/home/listItems.css';
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "./usercontext";
@@ -6,7 +6,8 @@ import { WishListContext } from "./wishlistcontext";
 
 const ItemsList = (props) => {
 
-    const [{items : likes,setItems : setLikes}] = useContext(WishListContext); 
+    const [{items : likes,setItems : setLikes}] = useContext(WishListContext);
+     
 
     const likedIds = likes.map((liked)=>{
       return liked.id;
@@ -16,11 +17,6 @@ const ItemsList = (props) => {
     items.map((item)=>{
         return {...item,isWishListed: (likedIds.includes(item.id))?true:false};
       });
-      console.log(items.length);
-    // console.log(JSON.stringify(items[0]));
-
-
-    const [isAdded,setIsAdded]=React.useState(false);
 
     const history = useNavigate();
 
@@ -30,43 +26,6 @@ const ItemsList = (props) => {
       localStorage.setItem('likes',JSON.stringify(likes));
     },[likes])
 
-    console.log(likes);
-  
-
-    const handleCart = (e,item) =>{
-      if(JSON.parse(localStorage.getItem('items')) !== null) {
-          const add=e.target.value;
-          let total=0;
-          if(add === "Add To Cart") {
-            const cart = JSON.parse(localStorage.getItem('items'));
-            cart.push({...item,"quantity":1});
-            localStorage.setItem('items',JSON.stringify(cart));
-            JSON.parse(localStorage.getItem('items')).forEach(item=>{
-              total+=item.price;
-            })
-            localStorage.setItem('total',total);
-            localStorage.setItem('quantity',JSON.parse(localStorage.getItem('items')).length);
-          }
-      } else{
-        localStorage.setItem('items',JSON.stringify([{...item,"quantity":1}]));
-        //console.log(localStorage.getItem('items'));
-      }
-      setIsAdded(!isAdded);
-    }
-
-    function checkIfAdded(item) {
-      let products=JSON.parse(localStorage.getItem('items'));
-      if(products === null) {
-        products=[];
-      }
-      let checked=false;
-      products.forEach(element => {
-        if(element.id === item.id){
-          checked=true;
-        }
-      })
-      return checked;
-    }
     
     const handleZoomImage = (e) => {
         const rect = e.currentTarget.getBoundingClientRect();
@@ -98,9 +57,7 @@ const ItemsList = (props) => {
       });
       setLikes(isWishListed);
       };
-    // <img src="/images/icons/red-wishlist-icon.png" className="like-icon"/>
-    // <img src="/images/icons/heart-icon.png" className="like-icon"/>
-    console.log(useremail)
+
     return ( 
         <div className="itemlist" >
           
@@ -130,9 +87,9 @@ const ItemsList = (props) => {
                           </p>
                       </div>
                         <div className="buttons">
-                        {<button className={"add-to-cart"} value={checkIfAdded(item)?"Added":"Add To Cart"}
-                            onClick={(e)=>handleCart(e,item)}>
-                            {checkIfAdded(item)?"Added":"Add To Cart"}
+                        {<button className={"add-to-cart"} value={props.checkIfAdded(item)?"Added":"Add To Cart"}
+                            onClick={(e)=>props.handleCart(e,item)}>
+                            {props.checkIfAdded(item)?"Added":"Add To Cart"}
                           </button>}
                           {isadmin && <button className={"edit"} onClick={()=>handleEdit(item)}>Edit</button>}
                         </div>

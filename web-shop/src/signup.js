@@ -41,11 +41,9 @@ const SignUp = () => {
                     if(!res.ok){
                         throw Error("Faild");
                     }
-                    return res.json() // extract json data from response
+                    return res.text()
                 })
                 .then(data => {
-                    console.log(data);
-
                     setIsPending(false);
 
                     setUserName(name);
@@ -54,6 +52,9 @@ const SignUp = () => {
                     setCode(parseInt(data));
                     
                     history('/verifyemail');
+                })
+                .catch((err)=>{
+                    setErrorMessage(err.message);
                 });
         }
     }

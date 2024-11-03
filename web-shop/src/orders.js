@@ -10,7 +10,6 @@ const Orders = () => {
 
     return (
         <div>
-            <Header />
             <div className="orders">
                 <h2>Orders</h2>
                 {isPending && <h3>Loading ....</h3>}

@@ -1,15 +1,15 @@
 import { useEffect, useState, useContext } from 'react';
 import React from 'react'
 import './styles/cart/cart.css';
-import { useCookies } from 'react-cookie';
 import { useNavigate } from "react-router-dom";
-import Header from './Header.js';
 import { UserContext } from './usercontext.js';
+import { CartContext } from './cartcontext.js';
 
 const Cart = () => {
-    const [items,setItems] = useState((localStorage.getItem('items'))?JSON.parse(localStorage.getItem('items')):[]);
+
+    const [{items,setItems}] = useContext(CartContext);
     const [total,setTotal] = useState(0);
-    const [cookies] = useCookies(['email']);
+
 
     const [{useremail : userEmail,setUserEmail},
         {isadmin,setIsAdmin}] = useContext(UserContext);
@@ -24,7 +24,7 @@ const Cart = () => {
 
 
     useEffect(()=>{
-        localStorage.setItem('items',JSON.stringify(items));
+        localStorage.setItem('cartItems',JSON.stringify(items));
         let newTotal = 0;
         items.map(
             (item) =>{
@@ -65,19 +65,23 @@ const Cart = () => {
     }
 
     const handleCheckout = () =>{
-        if(userEmail === null){
+        if(!userEmail){
             setIsPending(false);
-            setError("please sign in");
-            history("/signin")
+            setError("please sign in!!");
+            history("/login")
         }
         else if(total !== 0){
             setIsPending(true);
-            const data = JSON.parse(JSON.stringify(items));
             fetch(url,{
                 method:'POST',
                 headers:{"content-type":"application/json"},
-                body:JSON.stringify({"data":data,"useremail":userEmail,"total":total,"token":token})
-            }).then(
+                body:JSON.stringify({"data":items,"useremail":userEmail,"total":total,"token":token})
+            }).then(res => {
+                if(!res.ok){
+                    throw Error("Faild");
+                }
+                })
+            .then(
                 () =>{
                     setIsPending(false);
                     alert("order marked!");
@@ -85,6 +89,7 @@ const Cart = () => {
                 }
             ).catch(err=>{
                 setError(err.message);
+                console.log(err.message);
                 setIsPending(false);
             }
             );        
@@ -92,7 +97,6 @@ const Cart = () => {
     }
     return (
         <div> 
-            <Header />
             <div className="cart">
                 <div className="left">
                     <div className="items-container">

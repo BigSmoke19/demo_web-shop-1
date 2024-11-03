@@ -1,6 +1,7 @@
 .cart {
     display: flex;
     flex-direction: row;
+    margin-top: 10px;
 }
 
 .left{

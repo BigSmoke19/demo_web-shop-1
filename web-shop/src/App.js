@@ -12,9 +12,9 @@ import { DataProvider } from './context';
 import { UserDataProvider } from './usercontext';
 import { VerifyDataProvider } from './verifycontext';
 import { WishListDataProvider } from './wishlistcontext';
+import { CartDataProvider } from './cartcontext';
 import Orders from './orders';
 import AddSale from './addsale';
-import Sales from './sales';
 
 function App() {
   return (
@@ -22,6 +22,7 @@ function App() {
     <UserDataProvider>
     <VerifyDataProvider>
     <WishListDataProvider>
+    <CartDataProvider>
     <Router>
       <div className="App">
         <div className="content">
@@ -68,6 +69,7 @@ function App() {
         </div>
       </div>
     </Router>
+    </ CartDataProvider>
     </WishListDataProvider>
     </ VerifyDataProvider>
     </ UserDataProvider>

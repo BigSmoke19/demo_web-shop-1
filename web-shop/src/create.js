@@ -21,12 +21,16 @@ const Create = () => {
         if(name !== "" && type !== "" && price != 0 && image){
             const item = {name,type,price,image,sale,token};
             setIsPending(true);
-            console.log(JSON.stringify(item));
             fetch(url,{
                 method:'POST',
                 headers:{"content-type":"application/json"},
                 body:JSON.stringify(item)
-            }).then(
+            }).then(res => {
+                if(!res.ok){
+                    throw Error("Faild");
+                }
+                })
+            .then(
                 () =>{
                     alert("New Item Added");
                     setIsPending(false);
@@ -39,11 +43,10 @@ const Create = () => {
     }
 
     const handleImage = (event) => {
-        console.log("started.........");
         const selectedFile = event.target.files[0];
 
 
-        if (!selectedFile){console.log(selectedFile);return;} 
+        if (!selectedFile){return;} 
 
         setIsPending(true);
         setError(null);
@@ -78,7 +81,6 @@ const Create = () => {
                     setImage(reader.result);
                 }
                 reader.readAsDataURL(file);
-                console.log(image);
                 setIsPending(false);
             }else{
                 setIsPending(false);

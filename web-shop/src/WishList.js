@@ -2,8 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import './styles/home/WishList.css';
 import { WishListContext } from './wishlistcontext';
 const WishList = (props) => {
-
-    //const [items,setItems] = useState((localStorage.getItem('likes'))?JSON.parse(localStorage.getItem('likes')):[{id:0,name:"empty",type:"",image:"",price:0}]);
+;
     const [{items : likes,setItems : setLikes}] = useContext(WishListContext); 
     const [{items : wishlistItems,setItems}] = useContext(WishListContext);
 
@@ -15,11 +14,8 @@ const WishList = (props) => {
       wishlistItems.map((item)=>{
           return {...item,isWishListed: (likedIds.includes(item.id))?true:false};
         });
-        console.log(items.length);
-      // console.log(JSON.stringify(items[0]));
+
   
-  
-      const [isAdded,setIsAdded]= useState(false);
 
     const handleLiked = (id) =>{
 
@@ -34,41 +30,6 @@ const WishList = (props) => {
         });
         setLikes(isWishListed);
         };
-
-    const handleCart = (e,item) =>{
-        if(JSON.parse(localStorage.getItem('items')) !== null) {
-            const add=e.target.value;
-            let total=0;
-            if(add === "Add To Cart") {
-              const cart = JSON.parse(localStorage.getItem('items'));
-              cart.push({...item,"quantity":1});
-              localStorage.setItem('items',JSON.stringify(cart));
-              JSON.parse(localStorage.getItem('items')).forEach(item=>{
-                total+=item.price;
-              })
-              localStorage.setItem('total',total);
-              localStorage.setItem('quantity',JSON.parse(localStorage.getItem('items')).length);
-            }
-        } else{
-          localStorage.setItem('items',JSON.stringify([{...item,"quantity":1}]));
-          //console.log(localStorage.getItem('items'));
-        }
-        setIsAdded(!isAdded);
-      }
-  
-      const checkIfAdded = (item) => {
-        let products=JSON.parse(localStorage.getItem('items'));
-        if(products === null) {
-          products=[];
-        }
-        let checked=false;
-        products.forEach(element => {
-          if(element.id === item.id){
-            checked=true;
-          }
-        })
-        return checked;
-      }
 
     return ( 
             <div className={props.onWishList?"wish-list wishlist-open":"wish-list"}>
@@ -103,9 +64,9 @@ const WishList = (props) => {
                                 </p>
                             </div>
                                 <div className="wislist-buttons">
-                            {<button className={"add-to-cart"} value={checkIfAdded(item)?"Added":"Add To Cart"}
-                                    onClick={(e)=>handleCart(e,item)}>
-                                    {checkIfAdded(item)?"Added":"Add To Cart"}
+                            {<button className={"add-to-cart"} value={props.checkIfAdded(item)?"Added":"Add To Cart"}
+                                    onClick={(e)=>props.handleCart(e,item)}>
+                                    {props.checkIfAdded(item)?"Added":"Add To Cart"}
                                 </button>}
                                 </div>
                             </div>

@@ -6,20 +6,25 @@ const AddSale = () => {
 
     const [image,setImage] = useState(null);
     const [name,setName] = useState("");
+
     const [isPending,setIsPending] = useState(false);
+    const [error,setError] = useState(null);
+
     const history = useNavigate();
     const url = "http://localhost/webshop-apis/addsale.php";
+
     const token = process.env.REACT_APP_CREATE_TOKEN;
+    
     const fileTypes = ['image/jpeg', 'image/png', 'image/gif'];
     const fileSize =  5 * 1024 * 1024;
-    const [error,setError] = useState(null);
+    
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if(name !== "" && image){
             const item = {name,image,token};
             setIsPending(true);
-            console.log(JSON.stringify(item));
+    
             fetch(url,{
                 method:'POST',
                 headers:{"content-type":"application/json"},

@@ -17,7 +17,7 @@ const VerifyEmail = () => {
     const [cookies,setCookies,removeCookies] = useCookies(['email']);
 
     const [{name,setName},{email,setEmail},{password,setPassword},{code,setCode}] = useContext(VerifyContext);
-    const token = process.env.SIGN_UP_TOKEN;
+    const token = process.env.REACT_APP_SIGN_UP_TOKEN;
 
     const [{useremail,setUserEmail},
         {isadmin,setIsAdmin}] = useContext(UserContext);
@@ -26,12 +26,10 @@ const VerifyEmail = () => {
         setNumber(value);
     }
     const handleSubmit = () =>{
-        console.log("code:" + code,"nmbr:" + number);
         if(count <= 0){
             history("/");
         }
         if(parseInt(number) === parseInt(code)){
-            console.log(101);
             setIsPending(true);
             const user = {name,email,password,token};
             fetch(url,{
@@ -47,15 +45,16 @@ const VerifyEmail = () => {
             })
             .then(
                 (data) =>{
-
+                    alert(data);
                     setUserEmail(email);
+                    setIsAdmin(false);
                     setCookies('email',email,{path: '/',expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000)});
                     alert("Signed Up!");
                     setIsPending(false);
                     history("/");
                 }
             ).catch(err =>{
-                console.log(err.message);
+                setError(err.message);
             });         
         }
         else{

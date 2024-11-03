@@ -65,7 +65,6 @@ const LogIn = () => {
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-        console.log("email: " + email, "pass: "+ password);
         if(checkCredentials()){
 
             setPending(true);
@@ -82,7 +81,7 @@ const LogIn = () => {
                 return res.json() // extract json data from response
             })
             .then(data => {
-                console.log(data);
+
                 setUser(data);
                 setMyError(data.message);
             });   

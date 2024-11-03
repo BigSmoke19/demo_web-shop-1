@@ -6,6 +6,8 @@ import { useEffect, useState, useContext} from 'react';
 import { DataContext } from './context.js';
 import React from 'react';
 import Sales from './sales.js';
+import { CartContext } from "./cartcontext";
+
 
 const Home = () => {
     const [itemlist,setItemList] = useState(false);
@@ -18,6 +20,9 @@ const Home = () => {
     const {items : data,isPending,error} = (useFetch(url));
     const [{search,setSearch},{items, setItems},{recomendations,setRecomendations}] = useContext(DataContext);
     const [change,setChange] = useState(false);
+
+    const [{items : cartItems,setItems : setCartItems}] = useContext(CartContext);
+    const [isAdded,setIsAdded]= useState(false);
 
     useEffect(()=>{setItems(data)},[data]);
     useEffect(()=>{
@@ -38,16 +43,11 @@ const Home = () => {
 
     if(data !== null){
       if(change === true){
-        console.log("Searching.....");
         setItems(data.filter((item)=>
           item.name.toLowerCase().includes(search.toLowerCase())
         ));
         setChange(false);
       }
-      if(items !== null){
-        console.log(items.length);
-      }
-      console.log(recomendations);
     }
     
 
@@ -60,19 +60,48 @@ const Home = () => {
       handleItemList(true);
   }
 
+  const handleCart = (e,item) =>{
+    if(cartItems !== null) {
+        const add=e.target.value;
+        if(add === "Add To Cart") {
+          const cart = cartItems;
+          cart.push({...item,"quantity":1});
+          localStorage.setItem('cartItems',JSON.stringify(cart));
+        }
+    } else{
+      localStorage.setItem('CartItems',JSON.stringify([{...item,"quantity":1}]));
+      setCartItems([{...item,"quantity":1}]);
+    }
+    setIsAdded(!isAdded);
+  }
+
+  function checkIfAdded(item) {
+    let products = cartItems;
+    if(products === null) {
+      products=[];
+    }
+    let checked=false;
+    products.forEach(element => {
+      if(element.id === item.id){
+        checked=true;
+      }
+    })
+    return checked;
+  }
+
 
     return ( 
         <div>
-          <Header  handleItemList={handleItemList} />
+          <Header  handleItemList={handleItemList} handleCart={handleCart} checkIfAdded={checkIfAdded} />
           <Categories handleItemList={handleItemList} />
           <div>
             {error2 && <div>{error}</div>}     
             {isPending2 && <div>Loading....</div>}
             
-            {itemlist && items && <ItemsList items = {items} title = "My Items" isHome={isHome} />} 
-            {!itemlist && sales && <Sales handleSale={handleSale} sales={sales} items={items} error={error2}/>}
+            {itemlist && items && <ItemsList items = {items} title = "My Items" isHome={isHome} handleCart={handleCart} checkIfAdded={checkIfAdded}  />} 
+            {!itemlist && sales && <Sales
+             handleSale={handleSale} sales={sales} items={items}error={error2} />}
             
-           
           </div>
         </div>
      );

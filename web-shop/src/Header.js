@@ -6,9 +6,9 @@ import WishList from './wishlist.js';
 import { UserContext } from './usercontext.js';
 import { useCookies } from 'react-cookie';
 
-const Header = ({handleItemList}) => {
+const Header = ({handleItemList,handleCart,checkIfAdded}) => {
     const [onWishList,setOnWishList]= useState(false);
-    //const [cookies,setCookies,removeCookie] = useCookies(['email']);
+  
     const [isUserHover,setIsUserHover]=React.useState(false);
     const [isAdminUserHover,setIsAdminUserHover]=React.useState(false);
     const history = useNavigate();
@@ -145,7 +145,8 @@ const Header = ({handleItemList}) => {
 
                 <button className="right-section-buttons" onClick={()=>setOnWishList(!onWishList)} >
                     <img src="/images/icons/heart-icon.png" alt="" className="heart-icon" />
-                    <WishList  onWishList={onWishList} setOnWishList={()=>setOnWishList}/>
+                    <WishList  onWishList={onWishList} setOnWishList={()=>setOnWishList}
+                     handleCart={handleCart} checkIfAdded={checkIfAdded}/>
                 </button>
                 <Link to='/cart'>
                 <button className="right-section-buttons">

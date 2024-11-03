@@ -13,10 +13,9 @@ const Edit = () => {
     const [sale,setSale] = useState(item.sale);
     const [ispending,setIsPending] = useState(false);
     const history = useNavigate();
-    const url = "http://localhost/webshop-apis/edit.php";
-    const url2 = "http://localhost/webshop-apis/delete.php";
+    const editurl = "http://localhost/webshop-apis/edit.php";
+    const deleteurl = "http://localhost/webshop-apis/delete.php";
     const token = process.env.REACT_APP_CREATE_TOKEN;
-    console.log(token);
     const fileTypes = ['image/jpeg', 'image/png', 'image/gif'];
     const fileSize =  5 * 1024 * 1024;
     const [error,setError] = useState(null);
@@ -24,11 +23,10 @@ const Edit = () => {
 
 
     const handleImage = (event) => {
-        console.log("started.........");
         const selectedFile = event.target.files[0];
 
 
-        if (!selectedFile){console.log(selectedFile);return;} 
+        if (!selectedFile){return;} 
 
         setIsPending(true);
         setError(null);
@@ -80,12 +78,10 @@ const Edit = () => {
     };
 
     const handleSave = () => {
-        console.log(image);
         if(name !== "" && type !== "" && price != 0 && image){
             const newitem = {id,name,type,price,image,sale,token};
             setIsPending(true);
-            console.log(JSON.stringify(newitem));
-            fetch(url,{
+            fetch(editurl,{
                 method:'POST',
                 headers:{"content-type":"application/json"},
                 body:JSON.stringify(newitem)
@@ -111,8 +107,7 @@ const Edit = () => {
         if(true){
             const newitem = {id,token};
             setIsPending(true);
-            console.log(JSON.stringify(newitem));
-            fetch(url2,{
+            fetch(deleteurl,{
                 method:'POST',
                 headers:{"content-type":"application/json"},
                 body:JSON.stringify(newitem)
